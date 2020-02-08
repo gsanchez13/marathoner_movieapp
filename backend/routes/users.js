@@ -4,7 +4,7 @@ const db = require('../database/db.js')
 
 router.get('/', async (req, res, next) => {
   try {
-    let allUsers = await db.any('SELECT * FROM users');
+    let allUsers = await db.any('SELECT * FROM users;');
     res.status(200)
       .json({
         payload: allUsers,
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   let id = req.params.id;
   try {
-    let userById = await db.one('SELECT * FROM users WHERE id = $1', id)
+    let userById = await db.one('SELECT * FROM users WHERE id = $1;', id)
     res.status(200)
       .json({
         payload: userById,
