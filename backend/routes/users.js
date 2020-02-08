@@ -7,7 +7,8 @@ router.get('/', async (req, res, next) => {
     let allUsers = await db.any('SELECT * FROM users');
     res.status(200)
       .json({
-        payload: allUsers
+        payload: allUsers,
+        sucess: true
       })
   }
   catch (err) {

@@ -7,7 +7,8 @@ router.get('/', async (req, res, next) => {
     let allGenres = await db.any('SELECT * FROM genres')
     res.status(200)
       .json({
-        payload: allGenres
+        payload: allGenres,
+        success: true
       })
   }
   catch (err) {
@@ -21,7 +22,8 @@ router.post('/', async (req, res, next) => {
     let newGenre = await db.one('INSERT INTO genres(genre_name) VALUES($1) RETURNING *;', genre_name);
     res.status(200)
     .json({
-      payload: newGenre
+      payload: newGenre,
+      success: true
     })
   }
   catch(err) {
