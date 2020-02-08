@@ -30,4 +30,18 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res, next) => {
+  let { username, avatar_url } = req.body;
+  try {
+    let postedUser = await db.one('INSERT INTO users(username, avatar_url) VALUES($1, $2) RETURNING *;', [username, avatar_url])
+    res.status(200)
+    .json({
+      payload: postedUser
+    })
+  }
+  catch(err) {
+    throw err
+  }
+});
+
 module.exports = router;
