@@ -1,10 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const db = require('../database/db.js')
 
-router.get('/', (req, res, next) => {
-    res.status(200)
+router.get('/show/:show_id', async (req, res, next) => {
+    let id = req.params.show_id;
+    try {
+        let showById = await db.one('SELECT * FROM shows WHERE id = $1;', id)
+        res.status(200)
         .json({
-            payload: "Comments get all router works"
+            payload: showById,
+            success: true
         })
+    }
+    catch(err){
+        throw err
+    }
 })
 module.exports = router;

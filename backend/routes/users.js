@@ -36,11 +36,11 @@ router.post('/', async (req, res, next) => {
   try {
     let postedUser = await db.one('INSERT INTO users(username, avatar_url) VALUES($1, $2) RETURNING *;', [username, avatar_url])
     res.status(200)
-    .json({
-      payload: postedUser
-    })
+      .json({
+        payload: postedUser
+      })
   }
-  catch(err) {
+  catch (err) {
     throw err
   }
 });

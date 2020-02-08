@@ -21,12 +21,12 @@ router.post('/', async (req, res, next) => {
   try {
     let newGenre = await db.one('INSERT INTO genres(genre_name) VALUES($1) RETURNING *;', genre_name);
     res.status(200)
-    .json({
-      payload: newGenre,
-      success: true
-    })
+      .json({
+        payload: newGenre,
+        success: true
+      })
   }
-  catch(err) {
+  catch (err) {
     throw err
   }
 });
