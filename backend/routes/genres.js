@@ -15,4 +15,18 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res, next) => {
+  let { genre_name } = req.body;
+  try {
+    let newGenre = await db.one('INSERT INTO genres(genre_name) VALUES($1) RETURNING *;', genre_name);
+    res.status(200)
+    .json({
+      payload: newGenre
+    })
+  }
+  catch(err) {
+    throw err
+  }
+});
+
 module.exports = router;
