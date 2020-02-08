@@ -60,4 +60,20 @@ router.get('/:genre_id', async (req, res, next) => {
         throw err;
     }
 })
+
+router.get('/user/:user_id', async(req, res, next) => {
+    let id = req.params.user_id;
+    try{
+        let showsByUser = await db.any('SELECT * FROM shows WHERE user_id = $1', id);
+        res.status(200)
+        .json({
+            payload: showsByUser,
+            success: true
+        })
+    }
+    catch(err) {
+        throw err
+    }
+});
+
 module.exports = router;
