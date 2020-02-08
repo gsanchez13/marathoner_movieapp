@@ -7,12 +7,27 @@ router.get('/show/:show_id', async (req, res, next) => {
     try {
         let showById = await db.one('SELECT * FROM shows WHERE id = $1;', id)
         res.status(200)
+            .json({
+                payload: showById,
+                success: true
+            })
+    }
+    catch (err) {
+        throw err
+    }
+})
+
+router.post('/', async (req, res, next) => {
+    const { comment_body, user_id, show_id } = req.body;
+    try {
+        let newComment = await db.one('INSERT INTO comments(comment_body, user_id, show_id) VALUES ($1, $2, $3) RETURNING *;', [comment_body, user_id, show_id]);
+        res.status(200)
         .json({
-            payload: showById,
+            payload: newComment,
             success: true
         })
     }
-    catch(err){
+    catch (err) {
         throw err
     }
 })
