@@ -46,4 +46,18 @@ router.post('/', async(req, res, next) => {
     }
 });
 
+router.get('/:genre_id', async (req, res, next) => {
+    let genre_id = req.params.genre_id;
+    try {
+        let show = await db.one('SELECT * FROM genres WHERE id = $1;', genre_id);
+        res.status(200)
+        .json({
+            payload: show,
+            success: true
+        })
+    }
+    catch(err) {
+        throw err;
+    }
+})
 module.exports = router;
