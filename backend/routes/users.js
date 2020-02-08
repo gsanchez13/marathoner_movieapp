@@ -2,11 +2,17 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db.js')
 
-router.get('/', (req, res, next) => {
-  res.status(200)
-    .json({
-      payload: "Users get all route works"
-    })
+router.get('/', async (req, res, next) => {
+  try {
+    let allUsers = await db.any('SELECT * FROM users');
+    res.status(200)
+      .json({
+        payload: allUsers
+      })
+  }
+  catch (err) {
+    throw err
+  }
 });
 
 router.get('/:id', async (req, res, next) => {
