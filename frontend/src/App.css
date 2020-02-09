@@ -98,7 +98,7 @@ a :visited{
   margin: auto;
 }
 .show-avatar {
-  height: 60px;
+  height: 65px;
   width: 40px;
 }
 .show-divs {
@@ -106,8 +106,14 @@ a :visited{
   flex-flow: row;
   justify-content: space-evenly;
   padding: 15px;
+  border-style: solid;
+  border-width: 1px;
+  margin: 10px;
 }
 .show-container {
-  width: 60%;
+  padding: 30px;
+  width: 50%;
   margin: auto;
+  border-style: solid;
+  border-width: 1px;
 }

@@ -36,5 +36,3 @@ class Users extends Component {
     }
 }
 export default Users;
-
-//Shows master list of all users. Shows the "logged in" user. Should be able to click on each username linking to the user profile page.      

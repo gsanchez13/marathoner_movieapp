@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class User extends Component {
     constructor() {
@@ -44,13 +45,15 @@ class User extends Component {
         })
     }
     render() {
-        const { username, avatar_url, showsWatching } = this.state;
+        const { user_id, username, avatar_url, showsWatching } = this.state;
         let showsDivs = showsWatching.map((showObj) => {
             return (
                 <div key={showObj.id} className="show-divs">
+                    <Link to={`/shows/${showObj.id}/user/${user_id}`}>
                     <img src={showObj.img_url} alt={showObj.title} className="show-avatar"/>
                     <p>{showObj.title}</p>
-                    <p>{showObj.genre_name}</p>
+                    </Link>
+                    <h4>Genre: {showObj.genre_name}</h4>
                 </div>
             )
         })
