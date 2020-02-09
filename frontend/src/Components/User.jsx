@@ -13,20 +13,35 @@ class User extends Component {
     }
     componentDidMount = () => {
         let idByParams = this.props.match.params.id;
-        this.getUserInfo(idByParams)
+        this.setNewInfo(idByParams)
     }
     getUserInfo = async (id) => {
         try {
             let userInfo = await axios.get(`http://localhost:3100/users/${id}`).then((res) => res.data.payload);
-            this.setState({
-                user_id: id,
-                username: userInfo.username,
-                avatar_url: userInfo.avatar_url,
-            })
+            return userInfo;
         }
         catch(err){
             throw err
         }
+    }
+    getUsersShows = async (id) => {
+        try{
+            let usersShows = await axios.get(`http://localhost:3100/shows/user/${id}`).then((res) => res.data.payload);
+            return usersShows;
+        }
+        catch(err){
+            throw(err)
+        }
+    }
+    setNewInfo = async (id) => {
+        let userInfo = await this.getUserInfo(id);
+        let usersShows = await this.getUsersShows(id);
+        this.setState({
+            user_id: id,
+            username: userInfo.username,
+            avatar_url: userInfo.avatar_url,
+            showsWatching: usersShows
+        })
     }
     render() {
         const { username, avatar_url } = this.state;
