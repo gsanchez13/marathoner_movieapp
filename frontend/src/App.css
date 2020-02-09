@@ -95,4 +95,19 @@ a :visited{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: auto;
+}
+.show-avatar {
+  height: 60px;
+  width: 40px;
+}
+.show-divs {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  padding: 15px;
+}
+.show-container {
+  width: 60%;
+  margin: auto;
 }

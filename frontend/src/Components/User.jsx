@@ -47,20 +47,22 @@ class User extends Component {
         const { username, avatar_url, showsWatching } = this.state;
         let showsDivs = showsWatching.map((showObj) => {
             return (
-                <div key={showObj.id}>
-                    {showObj.title}
+                <div key={showObj.id} className="show-divs">
+                    <img src={showObj.img_url} alt={showObj.title} className="show-avatar"/>
+                    <p>{showObj.title}</p>
+                    <p>{showObj.genre_name}</p>
                 </div>
             )
         })
         let userCard = (username, avatar_url, shows) => {
             return (
-                <div>
-                    <div>
+                <div className="show-container">
+                    <div className="show-card">
                         <img src={avatar_url} alt={username} className="user-avatar" />
                         <h3>{username}'s Profile</h3>
                     </div>
                     <h2>Watching: </h2>
-                    <div>
+                    <div className>
                         {shows}
                     </div>
                 </div>
