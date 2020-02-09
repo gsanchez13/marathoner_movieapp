@@ -20,17 +20,17 @@ class User extends Component {
             let userInfo = await axios.get(`http://localhost:3100/users/${id}`).then((res) => res.data.payload);
             return userInfo;
         }
-        catch(err){
+        catch (err) {
             throw err
         }
     }
     getUsersShows = async (id) => {
-        try{
+        try {
             let usersShows = await axios.get(`http://localhost:3100/shows/user/${id}`).then((res) => res.data.payload);
             return usersShows;
         }
-        catch(err){
-            throw(err)
+        catch (err) {
+            throw (err)
         }
     }
     setNewInfo = async (id) => {
@@ -44,18 +44,31 @@ class User extends Component {
         })
     }
     render() {
-        const { username, avatar_url } = this.state;
-        let userCard = (username, avatar_url) => {
+        const { username, avatar_url, showsWatching } = this.state;
+        let showsDivs = showsWatching.map((showObj) => {
             return(
+                <div key={showObj.id}>
+                    {showObj.title}
+                </div>
+            )
+        })
+        let userCard = (username, avatar_url, shows) => {
+            return (
                 <div>
-                    <img src={avatar_url} alt={username} className="user-avatar"/>
-                    <h3>{username}'s Profile</h3>
+                    <div>
+                        <img src={avatar_url} alt={username} className="user-avatar" />
+                        <h3>{username}'s Profile</h3>
+                    </div>
+                    <h2>Watching: </h2>
+                    <div>
+                        {shows}
+                    </div>
                 </div>
             )
         }
-        return(
+        return (
             <div>
-                {userCard(username, avatar_url)}
+                {userCard(username, avatar_url, showsDivs)}
             </div>
         )
     }
