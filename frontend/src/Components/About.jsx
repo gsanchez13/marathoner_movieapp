@@ -13,3 +13,5 @@ class About extends Component {
     }
 }
 export default About;
+
+//Shows short description of what this app is about and who made it 

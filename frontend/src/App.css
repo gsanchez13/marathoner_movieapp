@@ -44,14 +44,18 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  border-style: solid;
+  border-width: 1px;
+  padding: 30px;
+  margin: 10px;
 }
 .logo {
   display: flex;
   padding: 20px;
   text-align: center;
   float: left;
-  border-style: solid;
-  border-width: 2px;
+  border: solid;
+  border-width: 1px;
   width: 20%;
 }
 .links {
@@ -61,6 +65,34 @@
   text-align: center;
   float: right;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   width: 65%
+}
+.home-ad {
+  height: 40%;
+  width: auto;
+}
+a:link{
+  text-decoration: none;
+}
+a :visited{
+  text-decoration: none;
+}
+.user-card {
+  border-style: solid;
+  border-width: 1px;
+  display: flex;
+  flex-direction: row;
+  margin: 15px;
+  padding: 10px;
+  justify-content: space-evenly
+}
+.user-avatar {
+  height: 80px;
+}
+.user-holder {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

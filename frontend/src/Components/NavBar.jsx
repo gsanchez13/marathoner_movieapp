@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { Switch, Link, Route } from 'react-router-dom';
 import Home from './Home';
 import Users from './Users';
-import Shows from './Shows'
+import User from './User';
+import Shows from './Shows';
 import About from './About';
+import AddShowForm from './AddShowForm';
+import ShowsProfile from './ShowsProfile';
 
 class NavBar extends Component {
     render() {
@@ -22,8 +25,11 @@ class NavBar extends Component {
                 <div>
                     <Switch>
                         <Route exact path='/' component={Home} />
-                        <Route path="/users" component={Users} />
-                        <Route path="/shows" component={Shows} />
+                        <Route exact path="/users" component={Users} />
+                        <Route exact path="/users/:id" component={User} />
+                        <Route exact path="/users/:id/addshow" component={AddShowForm} />
+                        <Route exact path="/shows/:id/user/:userId" component={ShowsProfile} />
+                        <Route exact path="/shows" component={Shows} />
                         <Route path="/about" component={About} />
                     </Switch>
                 </div>
