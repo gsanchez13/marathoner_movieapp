@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class ShowsProfile extends Component {
     constructor() {
         super();
         this.state = {
-            user_id: 1,
-            //get userId from the parameters in order to display specific users shows
+            user_id: 1
+        }
+    }
+    componentDidMount = () => {
+        let showIdByParams = this.props.match.params.id;
+        // let userIdByParams = this.props.match.params.userId;
+        this.getShowInfo(showIdByParams)
+    }
+    getShowInfo = async (id) => {
+        try {
+            let showObj = await axios.get(`http://localhost:3100/shows/${id}`).then((res) => res.data.payload);
+            console.log('hiiii', showObj)
+        }
+        catch (err) {
+            throw err
         }
     }
     render() {
-        return(
+        return (
             <div>
                 <h1> Users shows!</h1>
             </div>

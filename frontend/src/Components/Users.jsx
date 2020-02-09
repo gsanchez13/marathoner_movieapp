@@ -19,9 +19,9 @@ class Users extends Component {
         const { users } = this.state;
         let userCards = users.map((user) => {
             return (
-                <div className="user-card">
+                <div className="user-card" key={user.id}>
                     <Link to={`/users/${user.id}`}>
-                        <img src={user.avatar_url} alt={user.username} className="user-avatar" />
+                        <img src={user.avatar_url} alt={user.username}className="user-avatar" />
                         <br />
                         <h3>{user.username} </h3>
                     </Link>

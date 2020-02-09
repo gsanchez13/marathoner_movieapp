@@ -18,8 +18,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async(req, res, next) => {
     let id = req.params.id;
-    try{
-        let showById = await db.one('SELECT * FROM shows WHERE id = $1;', id);
+    try {
+        let showById = await db.one('SELECT * FROM shows INNER JOIN genres ON shows.genre_id = genres.id INNER JOIN users ON shows.user_id = users.id WHERE shows.id = $1;', id);
         res.status(200)
         .json({
             payload: showById,

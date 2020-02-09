@@ -50,7 +50,7 @@ class User extends Component {
             return (
                 <div key={showObj.id} className="show-divs">
                     <Link to={`/shows/${showObj.id}/user/${user_id}`}>
-                    <img src={showObj.img_url} alt={showObj.title} className="show-avatar"/>
+                    <img src={showObj.img_url} alt={showObj.title} className="show-avatar" key={showObj.id}/>
                     <p>{showObj.title}</p>
                     </Link>
                     <h4>Genre: {showObj.genre_name}</h4>
@@ -65,7 +65,7 @@ class User extends Component {
                         <h3>{username}'s Profile</h3>
                     </div>
                     <h2>Watching: </h2>
-                    <div className>
+                    <div>
                         {shows}
                     </div>
                 </div>
