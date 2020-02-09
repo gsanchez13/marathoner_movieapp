@@ -46,7 +46,7 @@ router.post('/', async(req, res, next) => {
     }
 });
 
-router.get('/:genre_id', async (req, res, next) => {
+router.get('/genre/:genre_id', async (req, res, next) => {
     let genre_id = req.params.genre_id;
     try {
         let show = await db.one('SELECT * FROM genres WHERE id = $1;', genre_id);
@@ -64,7 +64,7 @@ router.get('/:genre_id', async (req, res, next) => {
 router.get('/user/:user_id', async(req, res, next) => {
     let id = req.params.user_id;
     try{
-        let showsByUser = await db.any('SELECT * FROM shows WHERE user_id = $1', id);
+        let showsByUser = await db.any('SELECT * FROM shows INNER JOIN genres ON shows.genre_id = genres.id WHERE user_id = $1', id);
         res.status(200)
         .json({
             payload: showsByUser,

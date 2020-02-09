@@ -24,18 +24,18 @@ class User extends Component {
             throw err
         }
     }
-    getUsersShows = async (id) => {
+    getMovieInfoById = async (id) => {
         try {
-            let usersShows = await axios.get(`http://localhost:3100/shows/user/${id}`).then((res) => res.data.payload);
-            return usersShows;
+            let movieInfo = await axios.get(`http://localhost:3100/shows/user/${id}`).then((res) => res.data.payload);
+            return movieInfo;
         }
         catch (err) {
-            throw (err)
+            throw err
         }
     }
     setNewInfo = async (id) => {
         let userInfo = await this.getUserInfo(id);
-        let usersShows = await this.getUsersShows(id);
+        let usersShows = await this.getMovieInfoById(id);
         this.setState({
             user_id: id,
             username: userInfo.username,
@@ -46,7 +46,7 @@ class User extends Component {
     render() {
         const { username, avatar_url, showsWatching } = this.state;
         let showsDivs = showsWatching.map((showObj) => {
-            return(
+            return (
                 <div key={showObj.id}>
                     {showObj.title}
                 </div>
