@@ -5,7 +5,9 @@ class ShowsProfile extends Component {
     constructor() {
         super();
         this.state = {
-            user_id: ""
+            userId: "",
+            comments: [],
+            numberOfComments: 0,
         }
     }
     componentDidMount = () => {
@@ -22,8 +24,13 @@ class ShowsProfile extends Component {
             throw err
         }
     }
+    getComments = async (showId) => {
+        let showComments = await axios.get(`http://localhost:3100/comments/show/${showId}`).then((res) => res.data.payload);
+        return showComments;
+    }
     setShowInfo = async (user_id, showId) => {
         let showObj = await this.getShowInfo(showId);
+        let showComments = await this.getComments(showId)
         this.setState({
             userId: user_id,
             userName: showObj.username,
@@ -31,13 +38,23 @@ class ShowsProfile extends Component {
             showTitle: showObj.title,
             showAvatar: showObj.img_url,
             genreName: showObj.genre_name,
+            comments: showComments
         })
     }
     render() {
-        const { userName, showTitle } = this.state;
+        const { userName, showTitle, userAvatar, showAvatar, genreName, numberOfComments} = this.state;
         return (
             <div>
                 <h1> {userName}'s show: {showTitle}</h1>
+                <div>
+                    <img src={showAvatar} alt={showTitle} className="showpage-avatar"/>
+                    <br/>
+                    <h3>Genre: {genreName}</h3>
+                    <div className="comments-form">
+                        <h3>{numberOfComments} Comments</h3>
+                        
+                    </div>
+                </div>
             </div>
         )
     }

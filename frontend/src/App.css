@@ -117,3 +117,6 @@ a :visited{
   border-style: solid;
   border-width: 1px;
 }
+.showpage-avatar {
+  height: 400px;
+}
