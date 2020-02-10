@@ -5,27 +5,39 @@ class ShowsProfile extends Component {
     constructor() {
         super();
         this.state = {
-            user_id: 1
+            user_id: ""
         }
     }
     componentDidMount = () => {
         let showIdByParams = this.props.match.params.id;
-        // let userIdByParams = this.props.match.params.userId;
-        this.getShowInfo(showIdByParams)
+        let userIdByParams = this.props.match.params.userId;
+        this.setShowInfo(userIdByParams, showIdByParams)
     }
     getShowInfo = async (id) => {
         try {
             let showObj = await axios.get(`http://localhost:3100/shows/${id}`).then((res) => res.data.payload);
-            console.log('hiiii', showObj)
+            return showObj;
         }
         catch (err) {
             throw err
         }
     }
+    setShowInfo = async (user_id, showId) => {
+        let showObj = await this.getShowInfo(showId);
+        this.setState({
+            userId: user_id,
+            userName: showObj.username,
+            userAvatar: showObj.avatar_url,
+            showTitle: showObj.title,
+            showAvatar: showObj.img_url,
+            genreName: showObj.genre_name,
+        })
+    }
     render() {
+        const { userName, showTitle } = this.state;
         return (
             <div>
-                <h1> Users shows!</h1>
+                <h1> {userName}'s show: {showTitle}</h1>
             </div>
         )
     }
