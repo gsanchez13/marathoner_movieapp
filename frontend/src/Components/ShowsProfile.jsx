@@ -11,13 +11,14 @@ class ShowsProfile extends Component {
         }
     }
     componentDidMount = () => {
-        let showIdByParams = this.props.match.params.id;
         let userIdByParams = this.props.match.params.userId;
+        let showIdByParams = this.props.match.params.showId;
+        console.log("USER ID :", userIdByParams, 'SHOW ID: ', showIdByParams)
         this.setShowInfo(userIdByParams, showIdByParams)
     }
-    getShowInfo = async (id) => {
+    getShowInfo = async (showId) => {
         try {
-            let showObj = await axios.get(`http://localhost:3100/shows/${id}`).then((res) => res.data.payload);
+            let showObj = await axios.get(`http://localhost:3100/shows/showInfo/${showId}`).then((res) => res.data.payload);
             return showObj;
         }
         catch (err) {
@@ -25,14 +26,14 @@ class ShowsProfile extends Component {
         }
     }
     getComments = async (showId) => {
-        let showComments = await axios.get(`http://localhost:3100/comments/show/${showId}`).then((res) => res.data.payload);
+        let showComments = await axios.get(`http://localhost:3100/comments/show/${showId}`)
         return showComments;
     }
-    setShowInfo = async (user_id, showId) => {
-        let showObj = await this.getShowInfo(showId);
+    setShowInfo = async (userId, showId) => {
+        let showObj = await this.getShowInfo(userId, showId);
         let showComments = await this.getComments(showId)
         this.setState({
-            userId: user_id,
+            userId: userId,
             userName: showObj.username,
             userAvatar: showObj.avatar_url,
             showTitle: showObj.title,

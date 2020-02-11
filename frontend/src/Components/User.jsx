@@ -41,7 +41,7 @@ class User extends Component {
             user_id: id,
             username: userInfo.username,
             avatar_url: userInfo.avatar_url,
-            showsWatching: usersShows
+            showsWatching: usersShows,
         })
     }
     render() {

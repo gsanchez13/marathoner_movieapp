@@ -15,11 +15,29 @@ router.get('/', async (req, res, next) => {
         throw err
     }
 });
-
-router.get('/:id', async(req, res, next) => {
-    let id = req.params.id;
+router.get('/user/:userId', async (req, res, next) => {
+    let userId = req.params.userId;
     try {
-        let showById = await db.one('SELECT * FROM shows INNER JOIN genres ON shows.genre_id = genres.id INNER JOIN users ON shows.user_id = users.id WHERE shows.id = $1;', id);
+        let usersShows = await db.any('SELECT * FROM SHOWS INNER JOIN genres ON shows.genre_id = genres.id WHERE user_id = $1', userId);
+        res.status(200)
+        .json({
+            payload: usersShows,
+            success: true
+        })
+    }
+    catch(err) {
+        throw err
+    }
+})
+router.get('/showInfo/:showId', async(req, res, next) => {
+    let showId = req.params.showId;
+    try {
+        let showById = await db.any(`SELECT shows.id, title, img_url, genre_name, username 
+        FROM shows 
+        INNER JOIN genres ON shows.genre_id = genres.id 
+        INNER JOIN users ON shows.user_id = users.id  
+        WHERE shows.id = $1;`, showId);
+        console.log(showById)
         res.status(200)
         .json({
             payload: showById,

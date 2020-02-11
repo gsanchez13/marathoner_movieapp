@@ -28,7 +28,7 @@ class NavBar extends Component {
                         <Route exact path="/users" component={Users} />
                         <Route exact path="/users/:id" component={User} />
                         <Route exact path="/users/:id/addshow" component={AddShowForm} />
-                        <Route exact path="/shows/:id/user/:userId" component={ShowsProfile} />
+                        <Route exact path="/shows/:showId/user/:userId" component={ShowsProfile} />
                         <Route exact path="/shows" component={Shows} />
                         <Route path="/about" component={About} />
                     </Switch>
