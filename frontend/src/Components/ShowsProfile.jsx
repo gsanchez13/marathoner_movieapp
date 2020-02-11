@@ -30,7 +30,7 @@ class ShowsProfile extends Component {
         return showComments;
     }
     setShowInfo = async (userId, showId) => {
-        let showObj = await this.getShowInfo(userId, showId);
+        let showObj = await this.getShowInfo(showId);
         let showComments = await this.getComments(showId)
         this.setState({
             userId: userId,
@@ -43,7 +43,7 @@ class ShowsProfile extends Component {
         })
     }
     render() {
-        const { userName, showTitle, userAvatar, showAvatar, genreName, numberOfComments} = this.state;
+        const { userName, showTitle, showAvatar, genreName, numberOfComments} = this.state;
         return (
             <div>
                 <h1> {userName}'s show: {showTitle}</h1>

@@ -6,92 +6,77 @@ router.get('/', async (req, res, next) => {
     try {
         let allShows = await db.any('SELECT * FROM shows');
         res.status(200)
-        .json({
-            payload: allShows,
-            success: true
-        })
+            .json({
+                payload: allShows,
+                success: true
+            })
     }
-    catch(err) {
+    catch (err) {
         throw err
     }
 });
-router.get('/user/:userId', async (req, res, next) => {
-    let userId = req.params.userId;
+
+router.get('/user/:user_id', async (req, res, next) => {
+    let userId = req.params.user_id;
     try {
-        let usersShows = await db.any('SELECT * FROM SHOWS INNER JOIN genres ON shows.genre_id = genres.id WHERE user_id = $1', userId);
+        let showsByUser = await db.any('SELECT shows.id, title, img_url, genre_name FROM shows INNER JOIN genres ON shows.genre_id = genres.id WHERE shows.user_id = $1', userId);
         res.status(200)
-        .json({
-            payload: usersShows,
-            success: true
-        })
+            .json({
+                payload: showsByUser,
+                success: true
+            })
     }
-    catch(err) {
+    catch (err) {
         throw err
     }
-})
-router.get('/showInfo/:showId', async(req, res, next) => {
+});
+
+router.get('/showInfo/:showId', async (req, res, next) => {
     let showId = req.params.showId;
     try {
-        let showById = await db.any(`SELECT shows.id, title, img_url, genre_name, username 
+        let showById = await db.one(`SELECT shows.id as showId, title, img_url, genre_name, username 
         FROM shows 
         INNER JOIN genres ON shows.genre_id = genres.id 
         INNER JOIN users ON shows.user_id = users.id  
         WHERE shows.id = $1;`, showId);
-        console.log(showById)
         res.status(200)
-        .json({
-            payload: showById,
-            success: true
-        })
+            .json({
+                payload: showById,
+                success: true
+            })
     }
     catch (err) {
         throw err;
     }
 });
 
-router.post('/', async(req, res, next) => {
+router.post('/', async (req, res, next) => {
     const { title, img_url, user_id, genre_id } = req.body;
     try {
         let postedShow = await db.one('INSERT INTO shows(title, img_url, user_id, genre_id) VALUES($1, $2, $3, $4) RETURNING *;', [title, img_url, user_id, genre_id]);
         res.status(200)
-        .json({
-            payload: postedShow,
-            success: true
-        })
+            .json({
+                payload: postedShow,
+                success: true
+            })
     }
-    catch(err) {
+    catch (err) {
         throw err
     }
 });
-
 router.get('/genre/:genre_id', async (req, res, next) => {
     let genre_id = req.params.genre_id;
     try {
-        let show = await db.one('SELECT * FROM genres WHERE id = $1;', genre_id);
+        let show = await db.one('SELECT * FROM shows WHERE genre_id = $1;', genre_id);
         res.status(200)
-        .json({
-            payload: show,
-            success: true
-        })
+            .json({
+                payload: show,
+                success: true
+            })
     }
-    catch(err) {
+    catch (err) {
         throw err;
     }
 })
-
-router.get('/user/:user_id', async(req, res, next) => {
-    let id = req.params.user_id;
-    try{
-        let showsByUser = await db.any('SELECT * FROM shows INNER JOIN genres ON shows.genre_id = genres.id WHERE user_id = $1', id);
-        res.status(200)
-        .json({
-            payload: showsByUser,
-            success: true
-        })
-    }
-    catch(err) {
-        throw err
-    }
-});
 
 module.exports = router;

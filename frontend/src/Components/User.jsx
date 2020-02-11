@@ -16,19 +16,19 @@ class User extends Component {
         let idByParams = this.props.match.params.id;
         this.setNewInfo(idByParams)
     }
-    getUserInfo = async (id) => {
+    getUserInfo = async (userId) => {
         try {
-            let userInfo = await axios.get(`http://localhost:3100/users/${id}`).then((res) => res.data.payload);
+            let userInfo = await axios.get(`http://localhost:3100/users/${userId}`).then((res) => res.data.payload);
             return userInfo;
         }
         catch (err) {
             throw err
         }
     }
-    getMovieInfoById = async (id) => {
+    getShowInfoByUserId = async (userId) => {
         try {
-            let movieInfo = await axios.get(`http://localhost:3100/shows/user/${id}`).then((res) => res.data.payload);
-            return movieInfo;
+            let showInfo = await axios.get(`http://localhost:3100/shows/user/${userId}`).then((res) => res.data.payload);
+            return showInfo;
         }
         catch (err) {
             throw err
@@ -36,7 +36,9 @@ class User extends Component {
     }
     setNewInfo = async (id) => {
         let userInfo = await this.getUserInfo(id);
-        let usersShows = await this.getMovieInfoById(id);
+        let usersShows = await this.getShowInfoByUserId(id);
+        console.log(usersShows)
+
         this.setState({
             user_id: id,
             username: userInfo.username,
@@ -48,31 +50,30 @@ class User extends Component {
         const { user_id, username, avatar_url, showsWatching } = this.state;
         let showsDivs = showsWatching.map((showObj) => {
             return (
-                <div key={showObj.id} className="show-divs">
+                <div key={showObj.title} className="show-divs">
                     <Link to={`/shows/${showObj.id}/user/${user_id}`}>
-                    <img src={showObj.img_url} alt={showObj.title} className="show-avatar" key={showObj.id}/>
-                    <p>{showObj.title}</p>
+                        <img src={showObj.img_url} alt={showObj.title} className="show-avatar" key={showObj.id} />
+                        <p>{showObj.title}</p>
                     </Link>
-                    <h4>Genre: {showObj.genre_name}</h4>
+                    <h4 key={showObj.id}>Genre: {showObj.genre_name}</h4>
                 </div>
             )
-        })
+        });
         let userCard = (username, avatar_url, shows) => {
             return (
-                <div className="show-container">
-                    <div className="show-card">
-                        <img src={avatar_url} alt={username} className="user-avatar" />
-                        <h3>{username}'s Profile</h3>
-                    </div>
+                <div className="show-card">
+                    <img src={avatar_url} alt={username} className="user-avatar" />
+                    <h3>{username}'s Profile</h3>
                     <h2>Watching: </h2>
                     <div>
                         {shows}
                     </div>
                 </div>
+
             )
         }
         return (
-            <div>
+            <div className="show-container">
                 {userCard(username, avatar_url, showsDivs)}
             </div>
         )
