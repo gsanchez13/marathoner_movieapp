@@ -7,7 +7,6 @@ class ShowsProfile extends Component {
         this.state = {
             user_id: "",
             comments: [],
-            numberOfComments: 0,
             comment_body: "",
         }
     }
@@ -26,12 +25,12 @@ class ShowsProfile extends Component {
         }
     }
     getComments = async (showId) => {
-        let showComments = await axios.get(`http://localhost:3100/comments/show/${showId}`)
+        let showComments = await axios.get(`http://localhost:3100/comments/show/${showId}`).then((res) => res.data.payload)
         return showComments;
     }
     setShowInfo = async (userId, showId) => {
         let showObj = await this.getShowInfo(showId);
-        let showComments = await this.getComments(showId)
+        let showComments = await this.getComments(showId);
         this.setState({
             user_id: userId,
             show_id: showId,
@@ -40,7 +39,8 @@ class ShowsProfile extends Component {
             showTitle: showObj.title,
             showAvatar: showObj.img_url,
             genreName: showObj.genre_name,
-            comments: showComments
+            comments: showComments,
+            numberOfComments: showComments.length
         })
     }
     handleInputChange = (e) => {
@@ -51,24 +51,37 @@ class ShowsProfile extends Component {
     }
     handleNewComment = async (e) => {
         e.preventDefault();
-        const { comment_body, user_id , show_id} = this.state;
+        const { comment_body, user_id, show_id, comments } = this.state;
         let newComment = { comment_body, user_id, show_id };
         try {
-            let postedComment = await axios.post('http://localhost:3100/comments', newComment);
-            return postedComment;
+            let postedCommentObj = await axios.post('http://localhost:3100/comments', newComment).then((res) => res.data.payload);
+            comments.push(postedCommentObj.comment_body);
+            this.setState({
+                comments: comments,
+            })
         }
         catch (err) {
             throw err
         }
     }
     render() {
-        const { userName, showTitle, showAvatar, genreName, numberOfComments } = this.state;
+        const { userName, showTitle, showAvatar, genreName, numberOfComments, comments } = this.state;
+        let commentsList = comments.map((comment) => {
+            return (
+               <li className="comments-list-item">{comment.comment_body} </li> 
+            )
+        });
         let commentsForm = () => {
             return (
-                <form onSubmit={this.handleNewComment} className="comments-form">
-                    <input type="text" placeholder="Type new comment here" id="comment-input" onChange={this.handleInputChange} /><br />
-                    <button type="submit">Add Comment</button>
-                </form>
+                <div>
+                    <form onSubmit={this.handleNewComment} className="comments-form">
+                        <input type="text" placeholder="Type new comment here" id="comment-input" onChange={this.handleInputChange} /><br />
+                        <button type="submit">Add Comment</button>
+                    </form>
+                    <ul className="comments-ul">
+                        {commentsList}
+                    </ul>
+                </div>
             )
         }
         return (
