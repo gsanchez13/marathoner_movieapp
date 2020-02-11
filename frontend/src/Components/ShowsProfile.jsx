@@ -42,8 +42,20 @@ class ShowsProfile extends Component {
             comments: showComments
         })
     }
+    handleNewComment = (e) => {
+        e.preventDefault();
+        console.log("new comment:", e.target.value)
+    }
     render() {
         const { userName, showTitle, showAvatar, genreName, numberOfComments} = this.state;
+        let commentsForm = () => {
+            return(
+                <form onSubmit={this.handleNewComment} className="comments-form">
+                    <input type="text" placeholder="Type new comment here" id="comment-input"/><br/>
+                    <button type="submit">Add Comment</button>
+                </form>
+            )
+        }
         return (
             <div>
                 <h1> {userName}'s show: {showTitle}</h1>
@@ -53,8 +65,8 @@ class ShowsProfile extends Component {
                     <h3>Genre: {genreName}</h3>
                     <div className="comments-form">
                         <h3>{numberOfComments} Comments</h3>
-                        
                     </div>
+                    {commentsForm()}
                 </div>
             </div>
         )
