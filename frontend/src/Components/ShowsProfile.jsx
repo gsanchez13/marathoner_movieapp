@@ -5,15 +5,15 @@ class ShowsProfile extends Component {
     constructor() {
         super();
         this.state = {
-            userId: "",
+            user_id: "",
             comments: [],
             numberOfComments: 0,
+            comment_body: "",
         }
     }
     componentDidMount = () => {
         let userIdByParams = this.props.match.params.userId;
         let showIdByParams = this.props.match.params.showId;
-        console.log("USER ID :", userIdByParams, 'SHOW ID: ', showIdByParams)
         this.setShowInfo(userIdByParams, showIdByParams)
     }
     getShowInfo = async (showId) => {
@@ -33,7 +33,8 @@ class ShowsProfile extends Component {
         let showObj = await this.getShowInfo(showId);
         let showComments = await this.getComments(showId)
         this.setState({
-            userId: userId,
+            user_id: userId,
+            show_id: showId,
             userName: showObj.username,
             userAvatar: showObj.avatar_url,
             showTitle: showObj.title,
@@ -42,16 +43,30 @@ class ShowsProfile extends Component {
             comments: showComments
         })
     }
-    handleNewComment = (e) => {
+    handleInputChange = (e) => {
+        let newInput = e.target.value;
+        this.setState({
+            comment_body: newInput,
+        })
+    }
+    handleNewComment = async (e) => {
         e.preventDefault();
-        console.log("new comment:", e.target.value)
+        const { comment_body, user_id , show_id} = this.state;
+        let newComment = { comment_body, user_id, show_id };
+        try {
+            let postedComment = await axios.post('http://localhost:3100/comments', newComment);
+            return postedComment;
+        }
+        catch (err) {
+            throw err
+        }
     }
     render() {
-        const { userName, showTitle, showAvatar, genreName, numberOfComments} = this.state;
+        const { userName, showTitle, showAvatar, genreName, numberOfComments } = this.state;
         let commentsForm = () => {
-            return(
+            return (
                 <form onSubmit={this.handleNewComment} className="comments-form">
-                    <input type="text" placeholder="Type new comment here" id="comment-input"/><br/>
+                    <input type="text" placeholder="Type new comment here" id="comment-input" onChange={this.handleInputChange} /><br />
                     <button type="submit">Add Comment</button>
                 </form>
             )
@@ -60,8 +75,8 @@ class ShowsProfile extends Component {
             <div>
                 <h1> {userName}'s show: {showTitle}</h1>
                 <div>
-                    <img src={showAvatar} alt={showTitle} className="showpage-avatar"/>
-                    <br/>
+                    <img src={showAvatar} alt={showTitle} className="showpage-avatar" />
+                    <br />
                     <h3>Genre: {genreName}</h3>
                     <div className="comments-form">
                         <h3>{numberOfComments} Comments</h3>
