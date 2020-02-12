@@ -1,17 +1,42 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class AddShowForm extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
-            user_id: 1,
-            //get userId from the parameters in order to display specific users shows
+            user_id: props.match.params.id
+        }
+    }
+    componentDidMount = () => {
+        this.getAllGenres();
+    }
+    getAllGenres = async () => {
+        try {
+            let allGenres = await axios.get(`http://localhost:3100/genres/`).then((res) => res.data.payload);
+            this.setState({
+                options: allGenres
+            })
+            return allGenres;
+        }
+        catch(err){
+            throw err
         }
     }
     render() {
+        // const { options } = this.state;
+        // let allOptions = options.map((op) => {
+        //     return(
+        //         <option value = {op}/>
+        //     )
+        // })
         return(
             <div>
-                <h1> Add a new show below!</h1>
+                <form onSubmit={this.handleNewShow}>
+                    <select>
+                        {/* {allOptions} */}
+                    </select>
+                </form>
             </div>
         )
     }

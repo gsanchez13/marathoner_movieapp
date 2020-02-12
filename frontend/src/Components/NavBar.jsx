@@ -19,6 +19,7 @@ class NavBar extends Component {
                     <div className="links">
                         <Link to="/users">Users</Link>{" "}
                         <Link to="/shows">Shows</Link>{" "}
+                        <Link to="/addShow">Add Show</Link>{" "}
                         <Link to="/about">About</Link>{" "}
                     </div>
                 </div>
@@ -27,7 +28,7 @@ class NavBar extends Component {
                         <Route exact path='/' component={Home} />
                         <Route exact path="/users" component={Users} />
                         <Route exact path="/users/:id" component={User} />
-                        <Route exact path="/users/:id/addshow" component={AddShowForm} />
+                        <Route exact path="/addShow" component={AddShowForm} />
                         <Route exact path="/shows/:showId/user/:userId" component={ShowsProfile} />
                         <Route exact path="/shows" component={Shows} />
                         <Route path="/about" component={About} />

@@ -13,7 +13,12 @@ class ShowsProfile extends Component {
     componentDidMount = () => {
         let userIdByParams = this.props.match.params.userId;
         let showIdByParams = this.props.match.params.showId;
+        this.handleNewComments()
         this.setShowInfo(userIdByParams, showIdByParams)
+    }
+    componentDidUpdate = () => {
+        this.getComments(this.props.match.params.userId);
+        this.setShowInfo(this.props.match.params.userId);
     }
     getShowInfo = async (showId) => {
         try {
@@ -40,7 +45,7 @@ class ShowsProfile extends Component {
             showAvatar: showObj.img_url,
             genreName: showObj.genre_name,
             comments: showComments,
-            numberOfComments: showComments.length
+            numberOfComments: showComments.length,
         })
     }
     handleInputChange = (e) => {
@@ -55,20 +60,23 @@ class ShowsProfile extends Component {
         let newComment = { comment_body, user_id, show_id };
         try {
             let postedCommentObj = await axios.post('http://localhost:3100/comments', newComment).then((res) => res.data.payload);
-            comments.push(postedCommentObj.comment_body);
+            console.log(postedCommentObj)
+            let commentsCopy = [...comments];
+            commentsCopy.unshift(postedCommentObj.comment_body);
             this.setState({
-                comments: comments,
+                comments: commentsCopy,
             })
+            this.getComments(this.state.show_id)
         }
         catch (err) {
             throw err
         }
     }
-    render() {
-        const { userName, showTitle, showAvatar, genreName, numberOfComments, comments } = this.state;
+    handleNewComments = () => {
+        const { comments } = this.state;
         let commentsList = comments.map((comment) => {
             return (
-               <li className="comments-list-item">{comment.comment_body} </li> 
+                <li className="comments-list-item">{comment.comment_body} </li>
             )
         });
         let commentsForm = () => {
@@ -84,6 +92,10 @@ class ShowsProfile extends Component {
                 </div>
             )
         }
+        return commentsForm();
+    }
+    render() {
+        const { userName, showTitle, showAvatar, genreName, numberOfComments } = this.state;
         return (
             <div>
                 <h1> {userName}'s show: {showTitle}</h1>
@@ -94,7 +106,7 @@ class ShowsProfile extends Component {
                     <div className="comments-form">
                         <h3>{numberOfComments} Comments</h3>
                     </div>
-                    {commentsForm()}
+                    {this.handleNewComments()}
                 </div>
             </div>
         )
