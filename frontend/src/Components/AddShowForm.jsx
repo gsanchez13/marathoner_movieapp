@@ -5,7 +5,8 @@ class AddShowForm extends Component {
     constructor(props) {
         super();
         this.state = {
-            user_id: props.match.params.id
+            user_id: props.match.params.id,
+            options: []
         }
     }
     componentDidMount = () => {
@@ -14,6 +15,7 @@ class AddShowForm extends Component {
     getAllGenres = async () => {
         try {
             let allGenres = await axios.get(`http://localhost:3100/genres/`).then((res) => res.data.payload);
+
             this.setState({
                 options: allGenres
             })
@@ -24,17 +26,18 @@ class AddShowForm extends Component {
         }
     }
     render() {
-        // const { options } = this.state;
-        // let allOptions = options.map((op) => {
-        //     return(
-        //         <option value = {op}/>
-        //     )
-        // })
+        const { options } = this.state;
+        console.log(options)
+        let allOptions = options.map((op) => {
+            return (
+                <option value={op.genre_name} >{op.genre_name}</option>
+            )
+        })
         return(
             <div>
                 <form onSubmit={this.handleNewShow}>
                     <select>
-                        {/* {allOptions} */}
+                        {allOptions}
                     </select>
                 </form>
             </div>
