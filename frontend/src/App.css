@@ -135,6 +135,17 @@ a :visited{
 .comments-list-item {
   border-style: solid;
   border-width: 1px;
-  /* padding: 5px; */
+
   margin: 10px;
+}
+.about-page{
+  margin: auto;
+  display: flex;
+  align-content: center;
+  text-align: center;
+  width: 40%;
+  flex-flow: column;
+}
+#cheers{
+  float: right;
 }
