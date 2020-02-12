@@ -16,7 +16,7 @@ class ShowsProfile extends Component {
         this.handleNewComments()
         this.setShowInfo(userIdByParams, showIdByParams)
     }
-    componentDidUpdate = () => {
+    componentDidUpdate = async () => {
         this.getComments(this.props.match.params.userId);
         this.setShowInfo(this.props.match.params.userId);
     }
@@ -60,13 +60,12 @@ class ShowsProfile extends Component {
         let newComment = { comment_body, user_id, show_id };
         try {
             let postedCommentObj = await axios.post('http://localhost:3100/comments', newComment).then((res) => res.data.payload);
-            console.log(postedCommentObj)
             let commentsCopy = [...comments];
             commentsCopy.unshift(postedCommentObj.comment_body);
             this.setState({
                 comments: commentsCopy,
             })
-            this.getComments(this.state.show_id)
+            this.setShowInfo(user_id, show_id)
         }
         catch (err) {
             throw err
@@ -76,7 +75,7 @@ class ShowsProfile extends Component {
         const { comments } = this.state;
         let commentsList = comments.map((comment) => {
             return (
-                <li className="comments-list-item">{comment.comment_body} </li>
+                <li className="comments-list-item" key={comment.comment_body}>{comment.comment_body} </li>
             )
         });
         let commentsForm = () => {

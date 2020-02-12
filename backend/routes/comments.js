@@ -20,12 +20,12 @@ router.get('/show/:show_id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     const { comment_body, user_id, show_id } = req.body;
     try {
-        let newComment = await db.one('INSERT INTO comments(comment_body, user_id, show_id) VALUES ($1, $2, $3) RETURNING *;', [comment_body, user_id, show_id]);
+        let newComment = await db.one('INSERT INTO comments(comment_body, user_id, show_id) VALUES ($1, $2, $3) RETURNING *;', [comment_body, user_id, show_id])
         res.status(200)
-        .json({
-            payload: newComment,
-            success: true
-        })
+            .json({
+                payload: newComment,
+                success: true
+            })
     }
     catch (err) {
         throw err
