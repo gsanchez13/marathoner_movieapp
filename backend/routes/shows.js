@@ -4,7 +4,7 @@ const db = require('../database/db.js');
 
 router.get('/', async (req, res, next) => {
     try {
-        let allShows = await db.any('SELECT * FROM shows');
+        let allShows = await db.any('SELECT * FROM shows INNER JOIN users ON shows.user_id = users.id');
         res.status(200)
             .json({
                 payload: allShows,

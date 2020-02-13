@@ -1,6 +1,29 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Shows extends Component {
+    constructor() {
+        super();
+        this.state = {
+            shows: []
+        }
+    }
+    componentDidMount = () => {
+        this.getShows();
+    }
+    getShows = async () => {
+        try{
+            let allShowInfo = await axios.get('http://localhost:3100/shows/').then((res) => res.data.payload);
+            console.log(allShowInfo)
+            return allShowInfo;
+        }
+        catch(err){
+            throw err
+        }
+    }
+    filterShows = (showsInfo) => {
+
+    }
     render() {
         return(
             <div>
