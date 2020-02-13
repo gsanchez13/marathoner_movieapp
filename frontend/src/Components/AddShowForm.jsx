@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class AddShowForm extends Component {
-    constructor(props) {
+    constructor() {
         super();
         this.state = {
-            user_id: props.match.params.id,
-            options: []
+            loggedInUser: 1,
+            options: [],
+            urlInput: "",
+            showInput: "",
+            selectedGenre: ""
         }
     }
     componentDidMount = () => {
@@ -25,11 +28,46 @@ class AddShowForm extends Component {
             throw err
         }
     }
-    handleUrlInput = () => {
-        console.log("url input changing")
+    handleUrlInput = (e) => {
+        let newUrlInput = e.target.value;
+        this.setState({
+            urlInput: newUrlInput,
+        })
     }
-    handleShowInput = () => {
-        console.log("show input changing")
+    handleShowInput = (e) => {
+        let newShowInput = e.target.value;
+        this.setState({
+            showInput: newShowInput,
+        })
+    }
+    handleSelectChange = (e) => {
+        let newSelectValue = e.target.value;
+        console.log("Select value changed! Value now:", newSelectValue)
+        this.setState({
+            selectedGenre: newSelectValue
+        })
+    }
+    handleNewShow = async (e) => {
+        e.preventDefault();
+        const { urlInput, showInput, loggedInUser, selectedGenre } = this.state;
+        if(urlInput && showInput && selectedGenre) {
+            let showObj = {
+                title: showInput,
+                img_url: urlInput,
+                user_id: loggedInUser,
+                genre_id: selectedGenre
+            }
+            try{
+                let newShow = await axios.post('http://localhost:3001/shows/', showObj);
+                return newShow;
+            }
+            catch(err){
+                console.log("Show didn't post!")
+            }
+        }
+        else {
+            console.log("all fields must be completed!")
+        }
     }
     render() {
         const { options } = this.state;
@@ -47,11 +85,12 @@ class AddShowForm extends Component {
                     <p><b>Show Name:</b></p>
                     <input type="text" placeholder="Show Name" onChange={this.handleShowInput}></input>
                     <br /><br />
-                    <select className="select-genres">
+                    <select className="select-genres" onChange={this.handleSelectChange}>
+                        <option value={null}>Select Genre</option>
                         {allOptions}
                     </select>
-                    <br/><br/>
-                    <button type="submit" onSubmit={this.handleShowInput}>Submit</button>
+                    <br /><br />
+                    <button type="submit" onSubmit={this.handleNewShow}>Submit</button>
                 </form>
             </div>
         )
