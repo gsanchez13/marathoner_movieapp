@@ -79,7 +79,7 @@ class ShowsProfile extends Component {
         }
     }
     handleNewComments = () => {
-        const { comments, commentUserInfo } = this.state;
+        const { comments } = this.state;
         let commentsList = comments.map((comment) => {
             return (<li className="comments-list-item" key={comment.comment_body}>{comment.comment_body} </li>
             )
@@ -102,7 +102,7 @@ class ShowsProfile extends Component {
     render() {
         const { userName, showTitle, showAvatar, genreName, numberOfComments } = this.state;
         return (
-            <div>
+            <div className='shows-profile'>
                 <h1> {userName}'s show: {showTitle}</h1>
                 <div>
                     <img src={showAvatar} alt={showTitle} className="showpage-avatar" />
