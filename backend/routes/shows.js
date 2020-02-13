@@ -4,7 +4,9 @@ const db = require('../database/db.js');
 
 router.get('/', async (req, res, next) => {
     try {
-        let allShows = await db.any('SELECT * FROM shows INNER JOIN users ON shows.user_id = users.id');
+        let allShows = await db.any(`SELECT * 
+        FROM shows 
+        INNER JOIN users ON shows.user_id = users.id`);
         res.status(200)
             .json({
                 payload: allShows,
@@ -19,7 +21,12 @@ router.get('/', async (req, res, next) => {
 router.get('/user/:user_id', async (req, res, next) => {
     let userId = req.params.user_id;
     try {
-        let showsByUser = await db.any('SELECT shows.id, title, img_url, genre_name FROM shows INNER JOIN genres ON shows.genre_id = genres.id WHERE shows.user_id = $1', userId);
+        let showsByUser = await db.any(`SELECT * 
+        FROM shows_users 
+        INNER JOIN users ON shows_users.user_id = users.id 
+        INNER JOIN shows ON shows_users.shows_id = shows.id
+        INNER JOIN genres ON shows.genre_id = genres.id
+        WHERE shows_users.user_id = $1;`, userId);
         res.status(200)
             .json({
                 payload: showsByUser,
@@ -50,11 +57,32 @@ router.get('/showInfo/:showId', async (req, res, next) => {
     }
 });
 
+router.get(`/newShowsRoute/:id`, async (req, res, next) => {
+    let showId = req.params.id;
+    try{
+        let showInfo = await db.any(`SELECT * 
+        FROM shows_users 
+        INNER JOIN users ON shows_users.user_id = users.id 
+        INNER JOIN shows_users.shows_id = shows.id 
+        WHERE shows_users.shows_id = $1`, showId)
+        res.status(200)
+        .json({
+            payload: showInfo,
+            sucess: true
+        })
+    }
+    catch(err) {
+        throw err
+    }
+});
+
 router.post('/', async (req, res, next) => {
     const { title, img_url, user_id, genre_id } = req.body;
     console.log(title, img_url, user_id, genre_id)
     try {
-        let postedShow = await db.one('INSERT INTO shows(title, img_url, user_id, genre_id) VALUES($1, $2, $3, $4) RETURNING *;', [title, img_url, user_id, genre_id]);
+        let postedShow = await db.one(`INSERT INTO shows(title, img_url, user_id, genre_id) 
+        VALUES($1, $2, $3, $4) 
+        RETURNING *;`, [title, img_url, user_id, genre_id]);
         res.status(200)
             .json({
                 payload: postedShow,
@@ -68,7 +96,9 @@ router.post('/', async (req, res, next) => {
 router.get('/genre/:genre_id', async (req, res, next) => {
     let genre_id = req.params.genre_id;
     try {
-        let show = await db.one('SELECT * FROM shows WHERE genre_id = $1;', genre_id);
+        let show = await db.one(`SELECT * 
+        FROM shows 
+        WHERE genre_id = $1;`, genre_id);
         res.status(200)
             .json({
                 payload: show,
