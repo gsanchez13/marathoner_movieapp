@@ -41,8 +41,7 @@ class AddShowForm extends Component {
         })
     }
     handleSelectChange = (e) => {
-        let newSelectValue = e.target.value;
-        console.log("Select value changed! Value now:", newSelectValue)
+        let newSelectValue = parseInt(e.target.value);
         this.setState({
             selectedGenre: newSelectValue
         })
@@ -58,7 +57,7 @@ class AddShowForm extends Component {
                 genre_id: selectedGenre
             }
             try{
-                let newShow = await axios.post('http://localhost:3001/shows/', showObj);
+                let newShow = await axios.post('http://localhost:3100/shows/', showObj).then((res) => res.data.payload);
                 return newShow;
             }
             catch(err){

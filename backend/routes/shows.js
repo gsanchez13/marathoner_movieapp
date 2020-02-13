@@ -52,6 +52,7 @@ router.get('/showInfo/:showId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     const { title, img_url, user_id, genre_id } = req.body;
+    console.log(title, img_url, user_id, genre_id)
     try {
         let postedShow = await db.one('INSERT INTO shows(title, img_url, user_id, genre_id) VALUES($1, $2, $3, $4) RETURNING *;', [title, img_url, user_id, genre_id]);
         res.status(200)
