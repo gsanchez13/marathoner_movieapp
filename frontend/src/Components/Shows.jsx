@@ -22,11 +22,10 @@ class Shows extends Component {
         }
     }
     filterShows = (showsInfo) => {
-
     }
     render() {
         return(
-            <div>
+            <div className="all-shows-container">
                 <h1>Shows</h1>
             </div>
         )

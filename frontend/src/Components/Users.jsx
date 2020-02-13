@@ -30,6 +30,7 @@ class Users extends Component {
         })
         return (
             <div className="user-holder">
+                <h1> Users: </h1>
                 {userCards}
             </div>
         )

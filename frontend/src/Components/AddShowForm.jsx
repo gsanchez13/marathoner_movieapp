@@ -78,7 +78,7 @@ class AddShowForm extends Component {
         return (
             <div>
                 <form onSubmit={this.handleNewShow} className="new-show-form">
-                    <h2> Add Show Form</h2>
+                    <h1> Add Show Form</h1>
                     <p><b>Show Image URL:</b></p>
                     <input type="text" placeholder="Image URL" onChange={this.handleUrlInput}></input><br />
                     <p><b>Show Name:</b></p>
@@ -96,8 +96,3 @@ class AddShowForm extends Component {
     }
 }
 export default AddShowForm;
-
-
-
-
-// Shows a form where the logged in user can add a new show. Should be able to submit to the Database. These changes are reflected app wide. Selecting the genre is a drop down. This data should be reflecting the genres in the database.

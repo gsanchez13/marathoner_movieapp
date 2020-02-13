@@ -118,6 +118,3 @@ class ShowsProfile extends Component {
     }
 }
 export default ShowsProfile;
-
-
-//A specific show's profile page for a specific user. Shows the title, image, genre, number of comments and list of comments. Allows you to add new comments. The comment should be reflected immediately on the list without needing to refresh the page.

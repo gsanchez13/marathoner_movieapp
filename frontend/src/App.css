@@ -83,19 +83,24 @@ a :visited{
   border-width: 1px;
   display: flex;
   flex-direction: row;
-  margin: 15px;
+  margin: auto;
   padding: 10px;
-  justify-content: space-evenly
+  justify-content: space-evenly;
+  width: 60%;
 }
 .user-avatar {
   height: 80px;
 }
 .user-holder {
-  width: 50%;
+  width: 40%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
   margin: auto;
+  border-style: solid;
+  border-width: 1px;
+  padding: 30px;
 }
 .show-avatar {
   height: 65px;
@@ -159,11 +164,17 @@ a :visited{
 .new-show-form {
   border-style: solid;
   border-width: 1px;
-  width: 60%;
+  width: 40%;
   margin: auto;
   padding: 40px;
 }
 .select-genres {
   align-self: center;
   padding: 10px;
+}
+.all-shows-container {
+  border-style: solid;
+  border-width: 1px;
+  width: 40%;
+  margin: auto;
 }
