@@ -18,7 +18,6 @@ CREATE TABLE shows (
     id SERIAL PRIMARY KEY,
     title VARCHAR NOT NULL,
     img_url VARCHAR NOT NULL,
-    user_id INT REFERENCES users(id),
     genre_id INT REFERENCES genres(id)
 );
 
@@ -28,6 +27,11 @@ CREATE TABLE comments (
     user_id INT REFERENCES users(id),
     show_id INT REFERENCES shows(id)
 );
+CREATE TABLE shows_users (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    shows_id INT REFERENCES shows(id)
+)
 
 -- INSERT GENRES
 INSERT INTO genres (genre_name) VALUES ('Adventure'); -- 1
@@ -42,30 +46,30 @@ INSERT INTO users (username, avatar_url) VALUES ('Michael Scott', 'https://i1.sn
 INSERT INTO users (username, avatar_url) VALUES ('Pam Beesly', 'https://i1.sndcdn.com/avatars-000150274248-xnvnyn-t500x500.jpg'); -- 4
 
 -- INSERT SHOWS
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('Game of Thrones', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg', 1, 4);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('Game of Thrones', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg', 2, 4);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('Game of Thrones', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg', 3, 4);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('The Flash', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/jC1KqsFx8ZyqJyQa2Ohi7xgL7XC.jpg', 1, 1);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('The Flash', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/jC1KqsFx8ZyqJyQa2Ohi7xgL7XC.jpg', 3, 1);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('The Flash', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/jC1KqsFx8ZyqJyQa2Ohi7xgL7XC.jpg', 4, 1);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('Naruto Shippūden', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/zAYRe2bJxpWTVrwwmBc00VFkAf4.jpg', 1, 4);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('Naruto Shippūden', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/zAYRe2bJxpWTVrwwmBc00VFkAf4.jpg', 2, 4);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('Greys Anatomy', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/eqgIOObafPJitt8JNh1LuO2fvqu.jpg', 3, 2);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('Greys Anatomy', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/eqgIOObafPJitt8JNh1LuO2fvqu.jpg', 4, 2);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('The Simpsons', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/yTZQkSsxUFJZJe67IenRM0AEklc.jpg', 1, 3);
-INSERT INTO shows (title, img_url, user_id, genre_id)
-VALUES ('The Simpsons', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/yTZQkSsxUFJZJe67IenRM0AEklc.jpg', 4, 3);
+INSERT INTO shows (title, img_url, genre_id)
+VALUES ('Game of Thrones', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg', 4);
+-- INSERT INTO shows (title, img_url, genre_id)
+-- VALUES ('Game of Thrones', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg', 4);
+-- INSERT INTO shows (title, img_url, genre_id)
+-- VALUES ('Game of Thrones', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg', 4);
+INSERT INTO shows (title, img_url, genre_id)
+VALUES ('The Flash', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/jC1KqsFx8ZyqJyQa2Ohi7xgL7XC.jpg', 1);
+-- INSERT INTO shows (title, img_url, genre_id)
+-- VALUES ('The Flash', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/jC1KqsFx8ZyqJyQa2Ohi7xgL7XC.jpg', 1);
+-- INSERT INTO shows (title, img_url, genre_id)
+-- VALUES ('The Flash', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/jC1KqsFx8ZyqJyQa2Ohi7xgL7XC.jpg', 1);
+INSERT INTO shows (title, img_url, genre_id)
+VALUES ('Naruto Shippūden', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/zAYRe2bJxpWTVrwwmBc00VFkAf4.jpg', 4);
+-- INSERT INTO shows (title, img_url, genre_id)
+-- VALUES ('Naruto Shippūden', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/zAYRe2bJxpWTVrwwmBc00VFkAf4.jpg', 4);
+INSERT INTO shows (title, img_url, genre_id)
+VALUES ('Greys Anatomy', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/eqgIOObafPJitt8JNh1LuO2fvqu.jpg', 2);
+-- INSERT INTO shows (title, img_url, genre_id)
+-- VALUES ('Greys Anatomy', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/eqgIOObafPJitt8JNh1LuO2fvqu.jpg', 2);
+INSERT INTO shows (title, img_url, genre_id)
+VALUES ('The Simpsons', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/yTZQkSsxUFJZJe67IenRM0AEklc.jpg', 3);
+-- INSERT INTO shows (title, img_url, genre_id)
+-- VALUES ('The Simpsons', 'https://image.tmdb.org/t/p/w370_and_h556_bestv2/yTZQkSsxUFJZJe67IenRM0AEklc.jpg', 3);
 
 -- INSERT COMMENTS
 INSERT INTO comments (comment_body, user_id, show_id)
@@ -73,7 +77,27 @@ VALUES ('BEST SHOW EVER!!', 1, 1);
 INSERT INTO comments (comment_body, user_id, show_id)
 VALUES ('Of course you would think so Jon', 2, 1);
 
+--INSERT shows_users
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(1, 1)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(1, 2)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(1, 3)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(3, 1)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(3, 2)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(4, 3)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(4, 4)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(5, 1)
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(5, 4)
 
 
 
-
+--leaving comments on show without having any specifc user just general show
+--have if statement in route that will be able to 
