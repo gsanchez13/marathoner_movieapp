@@ -57,25 +57,31 @@ class ShowsProfile extends Component {
     handleNewComment = async (e) => {
         e.preventDefault();
         const { comment_body, user_id, show_id, comments } = this.state;
-        let newComment = { comment_body, user_id, show_id };
-        try {
-            let postedCommentObj = await axios.post('http://localhost:3100/comments', newComment).then((res) => res.data.payload);
-            let commentsCopy = [...comments];
-            commentsCopy.unshift(postedCommentObj.comment_body);
-            this.setState({
-                comments: commentsCopy,
-            })
-            this.setShowInfo(user_id, show_id)
+        if (!comment_body) {
+            console.log("no comment")
         }
-        catch (err) {
-            throw err
+        else {
+            let newComment = { comment_body, user_id, show_id };
+            try {
+                let postedCommentObj = await axios.post('http://localhost:3100/comments', newComment).then((res) => res.data);
+                let commentsCopy = [...comments];
+                commentsCopy.unshift(postedCommentObj.payload.comment_body);
+                let commentUserInfoCopy = postedCommentObj.info;
+                this.setState({
+                    comments: commentsCopy,
+                    commentUserInfo: commentUserInfoCopy
+                })
+                this.setShowInfo(user_id, show_id)
+            }
+            catch (err) {
+                throw err
+            }
         }
     }
     handleNewComments = () => {
-        const { comments } = this.state;
+        const { comments, commentUserInfo } = this.state;
         let commentsList = comments.map((comment) => {
-            return (
-                <li className="comments-list-item" key={comment.comment_body}>{comment.comment_body} </li>
+            return (<li className="comments-list-item" key={comment.comment_body}>{comment.comment_body} </li>
             )
         });
         let commentsForm = () => {
