@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 router.get('/user/:user_id', async (req, res, next) => {
     let userId = req.params.user_id;
     try {
-        let showsByUser = await db.any(`SELECT * 
+        let showsByUser = await db.any(`SELECT shows_id, title, img_url, genre_id, genre_name 
         FROM shows_users 
         INNER JOIN users ON shows_users.user_id = users.id 
         INNER JOIN shows ON shows_users.shows_id = shows.id

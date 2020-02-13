@@ -37,8 +37,6 @@ class User extends Component {
     setNewInfo = async (id) => {
         let userInfo = await this.getUserInfo(id);
         let usersShows = await this.getShowInfoByUserId(id);
-        console.log(usersShows)
-
         this.setState({
             user_id: id,
             username: userInfo.username,
@@ -51,11 +49,11 @@ class User extends Component {
         let showsDivs = showsWatching.map((showObj) => {
             return (
                 <div key={showObj.title} className="show-divs">
-                    <Link to={`/shows/${showObj.id}/user/${user_id}`}>
-                        <img src={showObj.img_url} alt={showObj.title} className="show-avatar" key={showObj.id} />
+                    <Link to={`/shows/${showObj.shows_id}/user/${user_id}`}>
+                        <img src={showObj.img_url} alt={showObj.title} className="show-avatar" key={showObj.title} />
                         <p>{showObj.title}</p>
                     </Link>
-                    <h4 key={showObj.id}>Genre: {showObj.genre_name}</h4>
+                    <h4 key={showObj.show_id}>Genre: {showObj.genre_name}</h4>
                 </div>
             )
         });
