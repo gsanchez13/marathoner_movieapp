@@ -135,7 +135,7 @@ a :visited{
 .comments-list-item {
   border-style: solid;
   border-width: 1px;
-
+  height: 30px;
   margin: 10px;
 }
 .about-page{
@@ -148,4 +148,22 @@ a :visited{
 }
 #cheers{
   float: right;
+}
+.shows-profile {
+  border-style: solid;
+  border-width: 1px;
+  width: 70%;
+  margin: auto;
+  padding: 20px;
+}
+.new-show-form {
+  border-style: solid;
+  border-width: 1px;
+  width: 60%;
+  margin: auto;
+  padding: 40px;
+}
+.select-genres {
+  align-self: center;
+  padding: 10px;
 }

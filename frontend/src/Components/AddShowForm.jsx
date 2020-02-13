@@ -21,24 +21,37 @@ class AddShowForm extends Component {
             })
             return allGenres;
         }
-        catch(err){
+        catch (err) {
             throw err
         }
     }
+    handleUrlInput = () => {
+        console.log("url input changing")
+    }
+    handleShowInput = () => {
+        console.log("show input changing")
+    }
     render() {
         const { options } = this.state;
-        console.log(options)
         let allOptions = options.map((op) => {
             return (
-                <option value={op.genre_name} >{op.genre_name}</option>
+                <option key={op.id} value={op.id}>{op.genre_name}</option>
             )
         })
-        return(
+        return (
             <div>
-                <form onSubmit={this.handleNewShow}>
-                    <select>
+                <form onSubmit={this.handleNewShow} className="new-show-form">
+                    <h2> Add Show Form</h2>
+                    <p><b>Show Image URL:</b></p>
+                    <input type="text" placeholder="Image URL" onChange={this.handleUrlInput}></input><br />
+                    <p><b>Show Name:</b></p>
+                    <input type="text" placeholder="Show Name" onChange={this.handleShowInput}></input>
+                    <br /><br />
+                    <select className="select-genres">
                         {allOptions}
                     </select>
+                    <br/><br/>
+                    <button type="submit" onSubmit={this.handleShowInput}>Submit</button>
                 </form>
             </div>
         )
