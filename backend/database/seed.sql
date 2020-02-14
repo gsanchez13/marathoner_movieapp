@@ -75,6 +75,12 @@ INSERT INTO shows_users(user_id, shows_id)
 INSERT INTO shows_users(user_id, shows_id)
     VALUES(3, 1);
 INSERT INTO shows_users(user_id, shows_id)
+    VALUES(1, 2);
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(3, 2);
+INSERT INTO shows_users(user_id, shows_id)
+    VALUES(4, 2);
+INSERT INTO shows_users(user_id, shows_id)
     VALUES(1, 3);
 INSERT INTO shows_users(user_id, shows_id)
     VALUES(2, 3);
