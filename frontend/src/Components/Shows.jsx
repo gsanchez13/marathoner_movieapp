@@ -11,10 +11,10 @@ class Shows extends Component {
     componentDidMount = () => {
         this.getShows();
     }
-    getShows = async () => {
+    getShows = async (showId) => {
         try{
-            let allShowInfo = await axios.get('http://localhost:3100/shows/').then((res) => res.data.payload);
-            console.log(allShowInfo)
+            let allShowInfo = await axios.get(`http://localhost:3100/shows/newShowsRoute/${showId}`).then((res) => res.data.payload);
+
             return allShowInfo;
         }
         catch(err){

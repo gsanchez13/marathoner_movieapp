@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db.js')
 
-router.get('/show/:show_id', async (req, res, next) => {
-    let id = req.params.show_id;
+router.get('/showInfo/:show_id', async (req, res, next) => {
+    let showId = req.params.show_id;
     try {
-        let showById = await db.any('SELECT * FROM comments INNER JOIN users ON comments.user_id = users.id INNER JOIN shows ON comments.show_id = shows.id WHERE comments.show_id = $1;', id)
+        let showById = await db.any(`SELECT * 
+        FROM comments 
+        INNER JOIN users ON comments.user_id = users.id 
+        INNER JOIN shows ON comments.show_id = shows.id 
+        WHERE comments.show_id = $1;`, showId)
         res.status(200)
             .json({
                 payload: showById,
@@ -15,7 +19,7 @@ router.get('/show/:show_id', async (req, res, next) => {
     catch (err) {
         throw err
     }
-})
+});
 
 router.post('/', async (req, res, next) => {
     const { comment_body, user_id, show_id } = req.body;

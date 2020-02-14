@@ -2,26 +2,10 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db.js');
 
-router.get('/', async (req, res, next) => {
-    try {
-        let allShows = await db.any(`SELECT * 
-        FROM shows 
-        INNER JOIN users ON shows.user_id = users.id`);
-        res.status(200)
-            .json({
-                payload: allShows,
-                success: true
-            })
-    }
-    catch (err) {
-        throw err
-    }
-});
-
 router.get('/user/:user_id', async (req, res, next) => {
     let userId = req.params.user_id;
     try {
-        let showsByUser = await db.any(`SELECT * 
+        let showsByUser = await db.any(`SELECT shows_id, title, img_url, genre_id, genre_name 
         FROM shows_users 
         INNER JOIN users ON shows_users.user_id = users.id 
         INNER JOIN shows ON shows_users.shows_id = shows.id
@@ -37,15 +21,15 @@ router.get('/user/:user_id', async (req, res, next) => {
         throw err
     }
 });
+//for users profile to display what they are watching
 
 router.get('/showInfo/:showId', async (req, res, next) => {
     let showId = req.params.showId;
     try {
-        let showById = await db.one(`SELECT shows.id as showId, title, img_url, genre_name, username 
-        FROM shows 
-        INNER JOIN genres ON shows.genre_id = genres.id 
-        INNER JOIN users ON shows.user_id = users.id  
-        WHERE shows.id = $1;`, showId);
+        let showById = await db.one(`SELECT shows.id, title, img_url, genres.id, genre_name
+        FROM shows
+        INNER JOIN genres ON shows.genre_id = genres.id
+        WHERE shows.id = $1`, showId);
         res.status(200)
             .json({
                 payload: showById,
@@ -59,23 +43,23 @@ router.get('/showInfo/:showId', async (req, res, next) => {
 
 router.get(`/newShowsRoute/:id`, async (req, res, next) => {
     let showId = req.params.id;
-    try{
-        let showInfo = await db.any(`SELECT * 
+    try {
+        let showInfo = await db.any(`SELECT user_id, shows_id, username, avatar_url, title, img_url, genre_id
         FROM shows_users 
         INNER JOIN users ON shows_users.user_id = users.id 
-        INNER JOIN shows_users.shows_id = shows.id 
-        WHERE shows_users.shows_id = $1`, showId)
+        INNER JOIN shows ON shows_users.shows_id = shows.id 
+        WHERE shows_users.shows_id = $1;`, showId)
         res.status(200)
-        .json({
-            payload: showInfo,
-            sucess: true
-        })
+            .json({
+                payload: showInfo,
+                sucess: true
+            })
     }
-    catch(err) {
+    catch (err) {
         throw err
     }
 });
-
+//use this route for the all shows master page 
 router.post('/', async (req, res, next) => {
     const { title, img_url, user_id, genre_id } = req.body;
     console.log(title, img_url, user_id, genre_id)
