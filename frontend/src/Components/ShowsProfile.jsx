@@ -13,8 +13,9 @@ class ShowsProfile extends Component {
     componentDidMount = () => {
         let userIdByParams = this.props.match.params.userId;
         let showIdByParams = this.props.match.params.showId;
-        this.handleNewComments()
-        this.setShowInfo(userIdByParams, showIdByParams)
+        this.handleNewComments();
+        this.setShowInfo(userIdByParams, showIdByParams);
+        this.getShowInfo(showIdByParams);
     }
     componentDidUpdate = async () => {
         this.getComments(this.props.match.params.userId);
@@ -22,8 +23,8 @@ class ShowsProfile extends Component {
     }
     getShowInfo = async (showId) => {
         try {
-            let showObj = await axios.get(`http://localhost:3100/shows/showInfo/${showId}`).then((res) => res.data.payload);
-            return showObj;
+            let showInfo = await axios.get(`http://localhost:3100/comments/showInfo/${showId}`).then((res) => res.data.payload);
+            return showInfo;
         }
         catch (err) {
             throw err
@@ -39,8 +40,6 @@ class ShowsProfile extends Component {
         this.setState({
             user_id: userId,
             show_id: showId,
-            userName: showObj.username,
-            userAvatar: showObj.avatar_url,
             showTitle: showObj.title,
             showAvatar: showObj.img_url,
             genreName: showObj.genre_name,
@@ -100,10 +99,10 @@ class ShowsProfile extends Component {
         return commentsForm();
     }
     render() {
-        const { userName, showTitle, showAvatar, genreName, numberOfComments } = this.state;
+        const { showTitle, showAvatar, genreName, numberOfComments } = this.state;
         return (
             <div className='shows-profile'>
-                <h1> {userName}'s show: {showTitle}</h1>
+                <h1>{showTitle}</h1>
                 <div>
                     <img src={showAvatar} alt={showTitle} className="showpage-avatar" />
                     <br />
