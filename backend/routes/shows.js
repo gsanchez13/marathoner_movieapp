@@ -41,14 +41,24 @@ router.get('/showInfo/:showId', async (req, res, next) => {
     }
 });
 
-router.get(`/newShowsRoute/:id`, async (req, res, next) => {
-    let showId = req.params.id;
+router.get(`/findShowInfo/`, async (req, res, next) => {
     try {
-        let showInfo = await db.any(`SELECT user_id, shows_id, username, avatar_url, title, img_url, genre_id
-        FROM shows_users 
-        INNER JOIN users ON shows_users.user_id = users.id 
-        INNER JOIN shows ON shows_users.shows_id = shows.id 
-        WHERE shows_users.shows_id = $1;`, showId)
+        let getShowsQuery = `
+            SELECT title, img_url, genre_id, genre_name, shows_id,
+                ARRAY_AGG(
+                    JSON_BUILD_OBJECT(
+                        'username', username,
+                        'user_id', user_id,
+                        'avatar_url', avatar_url
+                    )
+                ) viewers
+            FROM shows_users 
+            INNER JOIN users ON shows_users.user_id = users.id 
+            INNER JOIN shows ON shows_users.shows_id = shows.id
+            INNER JOIN genres ON shows.genre_id = genres.id
+            GROUP BY title, img_url, genre_id, genre_name,shows_id;
+        `
+        let showInfo = await db.any(getShowsQuery)
         res.status(200)
             .json({
                 payload: showInfo,
@@ -60,6 +70,7 @@ router.get(`/newShowsRoute/:id`, async (req, res, next) => {
     }
 });
 //use this route for the all shows master page 
+
 router.post('/', async (req, res, next) => {
     const { title, img_url, user_id, genre_id } = req.body;
     console.log(title, img_url, user_id, genre_id)
@@ -77,6 +88,7 @@ router.post('/', async (req, res, next) => {
         throw err
     }
 });
+
 router.get('/genre/:genre_id', async (req, res, next) => {
     let genre_id = req.params.genre_id;
     try {
