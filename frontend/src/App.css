@@ -140,8 +140,12 @@ a :visited{
 .comments-list-item {
   border-style: solid;
   border-width: 1px;
-  height: 30px;
+  height: auto;
   margin: 10px;
+  padding: 5px;
+  display: flex;
+  flex-flow: row;
+  align-content: center
 }
 .about-page{
   margin: auto;
@@ -175,6 +179,28 @@ a :visited{
 .all-shows-container {
   border-style: solid;
   border-width: 1px;
-  width: 40%;
+  width: 60%;
   margin: auto;
+  display: flex;
+  flex-flow: column;
+}
+.individual-show-div {
+  justify-content: space-around;
+  border: solid 1px black;
+  display: flex;
+  flex-flow: row;
+}
+.users-watching {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  float: right;
+}
+.shows-show-avatar{
+  height: 150px;
+  float: left;
+  justify-content: flex-start;
+}
+.viewers-tag {
+  justify-self: center
 }
