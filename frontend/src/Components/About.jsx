@@ -6,7 +6,7 @@ class About extends Component {
             <div className="about-page">
                 <h1>About this Webpage</h1>
                 <p>
-                    Welcome to the about page. Once again, made with Redux for your entertainment. Please feel free to sign up and contact Giselle Sanchez for any inquiries as she built this page.
+                    Welcome to the about page. Once again, made with React for your entertainment. Please feel free to sign up and contact Giselle Sanchez for any inquiries as she built this page.
                 </p>
                 <br/>
                 <h3 id="cheers">Cheers.</h3>
