@@ -73,7 +73,7 @@ router.get(`/findShowInfo/`, async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     const { title, img_url, genre_id } = req.body;
-    let checkTitle = await db.one(`SELECT id FROM shows WHERE title = $1`, title);
+    let checkTitle = await db.one(`SELECT id, title, genre_id FROM shows WHERE EXISTS (SELECT id FROM shows WHERE title = $1);`, title);
     if(!checkTitle){
         try {
             let postedShow = await db.one(`INSERT INTO shows(title, img_url, genre_id) 
