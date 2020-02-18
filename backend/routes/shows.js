@@ -72,20 +72,28 @@ router.get(`/findShowInfo/`, async (req, res, next) => {
 //use this route for the all shows master page 
 
 router.post('/', async (req, res, next) => {
-    const { title, img_url, user_id, genre_id } = req.body;
-    console.log(title, img_url, user_id, genre_id)
-    try {
-        let postedShow = await db.one(`INSERT INTO shows(title, img_url, user_id, genre_id) 
-        VALUES($1, $2, $3, $4) 
-        RETURNING *;`, [title, img_url, user_id, genre_id]);
-        res.status(200)
-            .json({
-                payload: postedShow,
-                success: true
-            })
+    const { title, img_url, genre_id } = req.body;
+    let checkTitle = await db.one(`SELECT id FROM shows WHERE title = $1`, title);
+    if(!checkTitle){
+        try {
+            let postedShow = await db.one(`INSERT INTO shows(title, img_url, genre_id) 
+                    VALUES($1, $2, $3) 
+                    RETURNING *;`, [title, img_url, genre_id]);
+            res.status(200)
+                .json({
+                    payload: postedShow,
+                    success: true
+                })
+        }
+        catch (err) {
+            throw err
+        }
     }
-    catch (err) {
-        throw err
+    else{
+        res.json({
+            payload: "Show already exists",
+            success: false
+        })
     }
 });
 
