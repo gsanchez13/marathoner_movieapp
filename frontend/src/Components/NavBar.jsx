@@ -14,7 +14,7 @@ class NavBar extends Component {
             <div>
                 <div className="navbar" >
                     <div className="logo">
-                        <Link to="/" className="Home">Tv Watchlist App</Link>{" "}
+                        <Link to="/" className="Home">Marathoner</Link>{" "}
                     </div>
                     <div className="links">
                         <Link to="/users">Users</Link>{" "}

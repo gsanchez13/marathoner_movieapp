@@ -14,7 +14,7 @@ class Shows extends Component {
     }
     getShows = async () => {
         try {
-            let allShowInfo = await axios.get(`http://localhost:3100/shows/findShowInfo/`).then((res) => res.data.payload);
+            let allShowInfo = await axios.get(`http://localhost:8080/shows/findShowInfo/`).then((res) => res.data.payload);
             return allShowInfo;
         }
         catch (err) {
