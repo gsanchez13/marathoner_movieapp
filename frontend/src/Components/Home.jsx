@@ -13,7 +13,7 @@ class Home extends Component {
                 <br/>
                 <br/>
                 <img className="home-ad" src={randomImg(imgArr)} alt="TV GIF"/>
-                <h1>Welcome to TV Watchlist App</h1>
+                <h1>Welcome to Marathoner</h1>
             </div>
         )
     }

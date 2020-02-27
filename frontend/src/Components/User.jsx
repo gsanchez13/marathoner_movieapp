@@ -18,7 +18,7 @@ class User extends Component {
     }
     getUserInfo = async (userId) => {
         try {
-            let userInfo = await axios.get(`http://localhost:3100/users/${userId}`).then((res) => res.data.payload);
+            let userInfo = await axios.get(`http://localhost:8080/users/${userId}`).then((res) => res.data.payload);
             return userInfo;
         }
         catch (err) {
@@ -27,7 +27,7 @@ class User extends Component {
     }
     getShowInfoByUserId = async (userId) => {
         try {
-            let showInfo = await axios.get(`http://localhost:3100/shows/user/${userId}`).then((res) => res.data.payload);
+            let showInfo = await axios.get(`http://localhost:8080/shows/user/${userId}`).then((res) => res.data.payload);
             return showInfo;
         }
         catch (err) {

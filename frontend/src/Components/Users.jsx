@@ -10,7 +10,7 @@ class Users extends Component {
         }
     }
     componentDidMount = async () => {
-        let allUsers = await axios.get('http://localhost:3100/users/').then((res) => res.data.payload);
+        let allUsers = await axios.get('http://localhost:8080/users/').then((res) => res.data.payload);
         this.setState({
             users: allUsers,
         })

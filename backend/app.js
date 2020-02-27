@@ -23,8 +23,4 @@ app.use('/genres', genreRouter);
 app.use('/shows', showsRouter);
 app.use('/comments', commentsRouter);
 
-const port = 3100;
-app.listen(port, () => {
-    console.log(`Listening at port ${port}`)
-})
 module.exports = app;

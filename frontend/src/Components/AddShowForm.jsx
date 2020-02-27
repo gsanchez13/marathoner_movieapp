@@ -17,7 +17,7 @@ class AddShowForm extends Component {
     }
     getAllGenres = async () => {
         try {
-            let allGenres = await axios.get(`http://localhost:3100/genres/`).then((res) => res.data.payload);
+            let allGenres = await axios.get(`http://localhost:8080/genres/`).then((res) => res.data.payload);
 
             this.setState({
                 options: allGenres
