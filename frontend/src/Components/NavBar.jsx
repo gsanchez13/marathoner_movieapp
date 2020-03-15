@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Link, Route } from 'react-router-dom';
+import Login from './Login';
 import Home from './Home';
 import Users from './Users';
 import User from './User';
@@ -14,7 +15,7 @@ class NavBar extends Component {
             <div>
                 <div className="navbar" >
                     <div className="logo">
-                        <Link to="/" className="Home">Marathoner</Link>{" "}
+                        <Link to="/home" className="Home">Marathoner</Link>{" "}
                     </div>
                     <div className="links">
                         <Link to="/users">Users</Link>{" "}
@@ -25,7 +26,8 @@ class NavBar extends Component {
                 </div>
                 <div>
                     <Switch>
-                        <Route exact path='/' component={Home} />
+                        <Route exact path="/" component={Login}/>
+                        <Route exact path='/home' component={Home} />
                         <Route exact path="/users" component={Users} />
                         <Route exact path="/users/:id" component={User} />
                         <Route exact path="/addShow" component={AddShowForm} />
