@@ -8,3 +8,4 @@ const usersQueries = require('../database/queries/usersQueries');
 //         const user = await usersQueries.getUs
 //     }
 // })
+module.exports = passport;

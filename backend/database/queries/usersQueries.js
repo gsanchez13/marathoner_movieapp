@@ -1,15 +1,26 @@
 const db = require('../db.js');
 
-const getUserByUserId = async (userId) => {
-    const USERBYID = `SELECT * FROM USERS WHERE id = $1`;
+const getUserByUsername = async (username) => {
+    const USERBYID = `SELECT * FROM user WHERE username = $1;`
     try {
-        const users = await db.any(USERBYID, userId)
+        const user = await db.oneOrNone(USERBYID, username);
+        return user;
+    }
+    catch (err) {
+        throw err;
     }
 }
-const POSTUSER = `INSERT INTO users(username, avatar_url) VALUES($1, $2)`;
-
+const addNewUser = async (user) => {
+    const POSTUSER = `INSERT INTO users(username, avatar_url, password_digest) VALUES($1, $2, $3) RETURNING id, username`;
+    try {
+        const newUser = await db.one(POSTUSER, user);
+        return newUser;
+    }
+    catch (err) {
+        throw err;
+    }
+}
 module.exports = {
-    USERINFO,
-    USERBYID,
-    POSTUSER
+    getUserByUsername,
+    addNewUser
 }

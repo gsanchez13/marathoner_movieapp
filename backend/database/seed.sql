@@ -6,7 +6,8 @@ CREATE DATABASE tvwatchlistapp;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR NOT NULL,
-    avatar_url VARCHAR NOT NULL
+    avatar_url VARCHAR NOT NULL,
+    password_digest VARCHAR NOT NULL
 );
 
 CREATE TABLE genres (
