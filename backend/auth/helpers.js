@@ -1,4 +1,4 @@
-const bycrypt = require('bycrypt');
+const bcrypt = require('bcrypt');
 
 const hashPassword = async (password) => {
     try {
@@ -28,7 +28,7 @@ const loginRequired = (req, res, next) => {
         req.status(401)
         .json({
             payload: null,
-            msg: "You must signon to access Marathoner",
+            msg: "You must sign on to access Marathoner",
             err: true
         })
     }

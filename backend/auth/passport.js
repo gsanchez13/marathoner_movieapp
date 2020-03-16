@@ -5,7 +5,10 @@ const usersQueries = require('../database/queries/usersQueries');
 
 // passport.use(new LocalStrategy(async (username, password, done) => {
 //     try {
-//         const user = await usersQueries.getUs
+//         const user = await usersQueries.
+//     }
+//     catch(err) {
+//         throw err;
 //     }
 // })
 module.exports = passport;
