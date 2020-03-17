@@ -25,5 +25,13 @@ router.post('/signup', async (req, res, next) => {
         throw err;
     }
 });
+router.post('login', passport.authenticate('local'), (req, res, next) => {
+    res.status(200)
+    .json({
+        payload: req.user,
+        message: "User sucessfully logged in.",
+        error: false,
+    })
+});
 
 module.exports = router
