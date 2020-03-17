@@ -21,4 +21,8 @@ passport.use(new LocalStrategy(async (username, password, done) => {
     }
 }));
 
+passport.serializeUser((user, done) => {
+    done(null, user)
+});
+
 module.exports = passport;
