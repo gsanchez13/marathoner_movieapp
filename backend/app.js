@@ -24,6 +24,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(session({
+    secret: 'NOT_A_GOOD_SECRET',
+    resave: false,
+    saveUninitialized: true
+}))
+
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/genres', genreRouter);
