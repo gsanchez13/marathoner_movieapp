@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const { comparePassword } = require('./helpers');
+const { comparePasswords } = require('./helpers');
 const usersQueries = require('../database/queries/usersQueries');
 
 passport.use(new LocalStrategy(async (username, password, done) => {
@@ -23,6 +23,17 @@ passport.use(new LocalStrategy(async (username, password, done) => {
 
 passport.serializeUser((user, done) => {
     done(null, user)
+});
+
+passport.deserializeUser(async (user, done) => {
+    try {
+        let retrievedUser = await usersQueries.getUserByUsername(user.username);
+        delete retrievedUser.password_digest;
+        done(null, retrievedUser);
+    }
+    catch(err) {
+        done(null, false)
+    }
 });
 
 module.exports = passport;
