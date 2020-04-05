@@ -17,7 +17,7 @@ class AddShowForm extends Component {
     }
     getAllGenres = async () => {
         try {
-            let allGenres = await axios.get(`http://localhost:8080/genres/`).then((res) => res.data.payload);
+            let allGenres = await axios.get(`http://localhost:8080/genres/all`).then((res) => res.data.payload);
 
             this.setState({
                 options: allGenres
@@ -57,7 +57,7 @@ class AddShowForm extends Component {
                 genre_id: selectedGenre
             }
             try{
-                let newShow = await axios.post('http://localhost:3100/shows/', showObj).then((res) => res.data.payload);
+                let newShow = await axios.post('http://localhost:3100/shows/new_show:', showObj).then((res) => res.data.payload);
                 return newShow;
             }
             catch(err){

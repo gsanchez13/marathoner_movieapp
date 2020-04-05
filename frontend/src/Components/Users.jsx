@@ -10,10 +10,15 @@ class Users extends Component {
         }
     }
     componentDidMount = async () => {
-        let allUsers = await axios.get('http://localhost:8080/users/').then((res) => res.data.payload);
+        try {
+        let allUsers = await axios.get('http://localhost:8080/users/all').then((res) => res.data.payload);
         this.setState({
             users: allUsers,
         })
+    }
+    catch(err) {
+        throw err
+    }
     }
     render() {
         const { users } = this.state;

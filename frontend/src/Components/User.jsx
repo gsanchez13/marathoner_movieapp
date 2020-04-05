@@ -18,7 +18,7 @@ class User extends Component {
     }
     getUserInfo = async (userId) => {
         try {
-            let userInfo = await axios.get(`http://localhost:8080/users/${userId}`).then((res) => res.data.payload);
+            let userInfo = await axios.get(`http://localhost:8080/users/user/${userId}`).then((res) => res.data.payload);
             return userInfo;
         }
         catch (err) {

@@ -17,7 +17,7 @@ class ShowsProfile extends Component {
     };
     getShowInfo = async (showId) => {
         try {
-            let showInfo = await axios.get(`http://localhost:8080/shows/showInfo/${showId}`).then((res) => res.data.payload);
+            let showInfo = await axios.get(`http://localhost:8080/shows/info/${showId}`).then((res) => res.data.payload);
             return showInfo;
         }
         catch (err) {
@@ -25,7 +25,7 @@ class ShowsProfile extends Component {
         }
     };
     getComments = async (showId) => {
-        let showComments = await axios.get(`http://localhost:8080/comments/showInfo/${showId}`).then((res) => res.data.payload);
+        let showComments = await axios.get(`http://localhost:8080/comments/show_comments/${showId}`).then((res) => res.data.payload);
         return showComments;
     };
     setShowInfo = async (userId, showId) => {
@@ -56,7 +56,7 @@ class ShowsProfile extends Component {
         else {
             let newComment = { comment_body, user_id, show_id };
             try {
-                let postedCommentObj = await axios.post('http://localhost:8080/comments', newComment).then((res) => res.data);
+                let postedCommentObj = await axios.post('http://localhost:8080/comments/new_comment', newComment).then((res) => res.data);
                 let commentsCopy = [...comments];
                 commentsCopy.unshift(postedCommentObj.payload.comment_body);
                 let commentUserInfoCopy = postedCommentObj.info;

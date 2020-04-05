@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db.js')
 
-router.get('/showInfo/:show_id', async (req, res, next) => {
+router.get('/show_comments/:show_id', async (req, res, next) => {
     let showId = req.params.show_id;
     try {
         let showById = await db.any(`SELECT * 
@@ -20,8 +20,9 @@ router.get('/showInfo/:show_id', async (req, res, next) => {
         throw err
     }
 });
+// get a specific shows comments by show's id
 
-router.post('/', async (req, res, next) => {
+router.post('/new_comment', async (req, res, next) => {
     const { comment_body, user_id, show_id } = req.body;
     try {
         let newComment = await db.one('INSERT INTO comments(comment_body, user_id, show_id) VALUES ($1, $2, $3) RETURNING *;', [comment_body, user_id, show_id])
@@ -39,5 +40,5 @@ router.post('/', async (req, res, next) => {
         throw err
     }
 });
-
+// post new comment on show page
 module.exports = router;
