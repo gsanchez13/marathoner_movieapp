@@ -5,13 +5,14 @@ const userQueries = require('../database/queries/usersQueries');
 const passport = require('../auth/passport.js');
 
 router.post('/signup', async (req, res, next) => {
-    const { username, password } = req.body;
+    const { username, avatar_url, password } = req.body;
     try {
         const passwordDigest = await authHelpers.hashPassword(password);
         const userInfo = {
             username: username,
+            avatar_url: avatar_url,
             password: passwordDigest
-        }
+        };
         let newUser = await userQueries.addNewUser(userInfo);
         res.status(200)
             .json({
@@ -22,7 +23,7 @@ router.post('/signup', async (req, res, next) => {
     }
     catch (err) {
         console.log(err);
-        throw err;
+        return err;
     }
 });
 
