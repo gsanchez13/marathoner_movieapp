@@ -10,6 +10,8 @@ const hashPassword = async (password) => {
         throw err;
     }
 }
+//incoming password must be a string to be hashed
+
 const comparePasswords = async (candidatePassword, passwordDigest) => {
     try {
         const match = await bcrypt.compare(candidatePassword, passwordDigest);
@@ -38,4 +40,4 @@ module.exports = {
     hashPassword,
     comparePasswords,
     loginRequired
-}
+};

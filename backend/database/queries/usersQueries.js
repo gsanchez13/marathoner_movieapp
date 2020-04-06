@@ -11,10 +11,13 @@ const getUserByUsername = async (username) => {
     }
 }
 const addNewUser = async (user) => {
-    const { username, password } = user;
-    const POSTUSER = `INSERT INTO users(username, password_digest) VALUES($1, $2) RETURNING id, username, password_digest`;
+    const { username, avatar_url, password } = user;
+    const POSTUSER = `INSERT INTO 
+    users(username, avatar_url, password_digest) 
+    VALUES($1, $2, $3) 
+    RETURNING id, username, password_digest`;
     try {
-        const newUser = await db.one(POSTUSER, [ username, password ]);
+        const newUser = await db.one(POSTUSER, [username, avatar_url, password]);
         return newUser;
     }
     catch (err) {

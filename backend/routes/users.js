@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database/db.js')
+const db = require('../database/db.js');
 
 router.get('/user/:id', async (req, res, next) => {
   let id = req.params.id;
@@ -33,19 +33,19 @@ router.get('/all', async (req, res, next) => {
 });
 //get all users
 
-router.post('/new_user', async (req, res, next) => {
-  let { username, avatar_url } = req.body;
-  try {
-    let postedUser = await db.one('INSERT INTO users(username, avatar_url) VALUES($1, $2) RETURNING *;', [username, avatar_url])
-    res.status(200)
-      .json({
-        payload: postedUser
-      })
-  }
-  catch (err) {
-    throw err
-  }
-});
+// router.post('/new_user', async (req, res, next) => {
+//   let { username, avatar_url } = req.body;
+//   try {
+//     let postedUser = await db.one('INSERT INTO users(username, avatar_url, password_digest) VALUES($1, $2, $3) RETURNING *;', [username, avatar_url])
+//     res.status(200)
+//       .json({
+//         payload: postedUser
+//       })
+//   }
+//   catch (err) {
+//     throw err
+//   }
+// });
 //post new user
 
 module.exports = router;
