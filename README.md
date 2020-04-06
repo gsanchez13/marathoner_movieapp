@@ -2,13 +2,20 @@
 
 **An application that allows users to signup and display what shows they are watching, as well on comment on show pages and add new shows.**
 
+- **Auth**
+
+    | Method  | Endpoint     | Description   | Body Data          |
+    | ------- | ------------ | ------------- | ------------------ |
+    | GET     | /auth/logout | Log user out  | N/A                |
+    | POST    | /auth/signup | Register user | username, password |
+    | POST    | /auth/login  | Login user    | username, password |
+
 - **Users**
 
-    | Method  | Endpoint             | Description            | Body Data     |
-    | ------- | -------------------- | ---------------------- | ------------- |
-    | GET     |/users/:id            | Get a user by id       | N/A           |
-    | GET ALL |/users/all            | Get a user by id       | N/A           |
-    | POST    |/users/new_user       | Register a new user    | Body Data     |
+    | Method  | Endpoint   | Description            | Body Data  |
+    | ------- | ---------- | ---------------------- | ---------- |
+    | GET     | /users/:id | Get a user by id       | N/A        |
+    | GET ALL | /users/all | Get a user by id       | N/A        |
 
 - **Shows**
 
