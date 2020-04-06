@@ -11,14 +11,14 @@ class Users extends Component {
     }
     componentDidMount = async () => {
         try {
-        let allUsers = await axios.get('http://localhost:8080/users/all').then((res) => res.data.payload);
-        this.setState({
-            users: allUsers,
-        })
-    }
-    catch(err) {
-        throw err
-    }
+            let allUsers = await axios.get('http://localhost:8080/users/all').then((res) => res.data.payload);
+            this.setState({
+                users: allUsers,
+            })
+        }
+        catch (err) {
+            throw err
+        }
     }
     render() {
         const { users } = this.state;
@@ -26,7 +26,7 @@ class Users extends Component {
             return (
                 <div className="user-card" key={user.id}>
                     <Link to={`/users/${user.id}`}>
-                        <img src={user.avatar_url} alt={user.username}className="user-avatar" />
+                        <img src={user.avatar_url} alt={user.username} className="user-avatar" />
                         <br />
                         <h3>{user.username} </h3>
                     </Link>
