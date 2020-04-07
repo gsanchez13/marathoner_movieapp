@@ -1,7 +1,7 @@
 const db = require('../db.js');
 
 const getUserByUsername = async (username) => {
-    const USERBYID = `SELECT * FROM user WHERE username = $1;`
+    const USERBYID = `SELECT * FROM users WHERE username = $1;`
     try {
         const user = await db.oneOrNone(USERBYID, username);
         return user;
