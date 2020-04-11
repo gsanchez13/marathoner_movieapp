@@ -21,7 +21,7 @@
 
     | Method | Endpoint            | Description                    | Body Data                |
     | ------ | ------------------- | ------------------------------ | ------------------------ |
-    | GET    | /shows/info/showId  | Get show info by id            | N/A                      |
+    | GET    | /shows/info/:showId | Get show info by id            | N/A                      |
     | GET ALL| /shows/all          | Get all shows & viewers by id  | N/A                      |
     | GET    | /shows/user/:userId | Get shows that user is watching| N/A                      |
     | POST   | /shows/new_show     | Register a new show            | title, img_url, genre_id |
