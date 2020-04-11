@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../database/db.js');
+const { loginRequired } = require('../auth/helpers');
 
-router.get('/info/:showId', async (req, res, next) => {
+router.get('/info/:showId', loginRequired, async (req, res, next) => {
     let showId = req.params.showId;
     try {
         let showById = await db.one(`SELECT shows.id, title, img_url, genres.id, genre_name
@@ -21,7 +22,7 @@ router.get('/info/:showId', async (req, res, next) => {
 });
 //get show info for the individual show page
 
-router.get(`/all`, async (req, res, next) => {
+router.get(`/all`, loginRequired, async (req, res, next) => {
     try {
         let getShowsQuery = `
             SELECT title, img_url, genre_id, genre_name, shows_id,
@@ -51,7 +52,7 @@ router.get(`/all`, async (req, res, next) => {
 });
 //use this route for the all shows master page 
 
-router.get('/user/:user_id', async (req, res, next) => {
+router.get('/user/:user_id', loginRequired, async (req, res, next) => {
     let userId = req.params.user_id;
     try {
         let showsByUser = await db.any(`SELECT shows_id, title, img_url, genre_id, genre_name 
@@ -72,7 +73,7 @@ router.get('/user/:user_id', async (req, res, next) => {
 });
 //for users profile to display what they are watching
 
-router.post('/new_show', async (req, res, next) => {
+router.post('/new_show', loginRequired, async (req, res, next) => {
     const { title, img_url, genre_id } = req.body;
     let checkTitle = await db.one(`
         SELECT CAST(

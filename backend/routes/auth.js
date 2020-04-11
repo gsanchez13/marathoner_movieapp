@@ -35,9 +35,14 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
         error: false,
     })
 });
+//adds middleware form passport thats going to take in username & password and compare them and sucessfully logs them in
 
-router.get("/logout", (req, res, next) => {
-    res.send('/logout route')
-  })
+router.get('/logout', (req, res, next) => {
+    req.logout();
+    res.json({
+        messge: "User sucessfully logged out",
+        error: false
+    })
+  });
 
-module.exports = router
+module.exports = router;

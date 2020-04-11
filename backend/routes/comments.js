@@ -25,7 +25,8 @@ router.get('/show_comments/:show_id', async (req, res, next) => {
 router.post('/new_comment', async (req, res, next) => {
     const { comment_body, user_id, show_id } = req.body;
     try {
-        let newComment = await db.one('INSERT INTO comments(comment_body, user_id, show_id) VALUES ($1, $2, $3) RETURNING *;', [comment_body, user_id, show_id])
+        let newComment = await db.one(`INSERT INTO comments(comment_body, user_id, show_id) VALUES ($1, $2, $3) 
+        RETURNING *;`, [comment_body, user_id, show_id])
         let userCommentInfo = await db.any('SELECT (username, avatar_url, show_id) FROM comments INNER JOIN users ON comments.id = users.id WHERE comments.user_id = $1 AND comments.show_id = $2', [user_id, show_id]);
         console.log(newComment)
         console.log(userCommentInfo)

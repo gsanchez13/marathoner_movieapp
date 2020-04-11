@@ -27,7 +27,7 @@ const loginRequired = (req, res, next) => {
         return next();
     }
     else {
-        req.status(401)
+        res.status(401)
         .json({
             payload: null,
             msg: "You must sign on to access Marathoner",
