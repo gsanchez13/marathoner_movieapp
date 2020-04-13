@@ -7,3 +7,4 @@ export const useInput = (intitalValue) => {
     }
     return { value, onChange: handleChange}
 };
+//useState returns an array of length 2, the first element is a value and the second is a function to set the value
