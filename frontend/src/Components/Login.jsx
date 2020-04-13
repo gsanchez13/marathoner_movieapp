@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
+import { useInput } from '../util/customHooks.js';
 
 const Login = () => {
-    const [state, setState] = useState({
-        username: "",
-        password: ""
-    });
-    //state and setState are two items in the useState component of React
-    const handleChange = (e) => {
-        setState({ ...state, [e.target.name]: e.target.value })
-    };
+    const usernameObj = useInput("");
+    const passwordObj = useInput("");
     const handleSubmit = (e) => {
         e.preventDefault();
     }
-    const { username, password } = state;
+    console.log(usernameObj, passwordObj)
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input name="username" value={username} onChange={handleChange} placeholder="Username"/>
-                <input name="password" value={password} onChange={handleChange} placeholder="Password"/>
+                <input name={"username"} {...usernameObj} placeholder="Username"/>
+                <input name={"password"} {...passwordObj} placeholder="Password"/>
             </form>
         </div>
     )
