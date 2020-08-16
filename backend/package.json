@@ -19,6 +19,7 @@
     "pg-promise": "^10.5.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "dot-prop": "^5.2.0",
+    "nodemon": "^2.0.4"
   }
 }
