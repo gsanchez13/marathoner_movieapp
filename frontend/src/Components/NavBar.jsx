@@ -13,8 +13,8 @@ class NavBar extends Component {
     render() {
         return (
             <div>
-                <div className="navbar" >
-                    <div className="logo">
+                <nav className="navbar navbar-light" style={{'backgroundColor': '#e3f2fd'}} >
+                    <div className="logo my-2">
                         <Link to="/home" className="Home">Marathoner</Link>{" "}
                     </div>
                     <div className="links">
@@ -23,7 +23,7 @@ class NavBar extends Component {
                         <Link to="/addShow">Add Show</Link>{" "}
                         <Link to="/about">About</Link>{" "}
                     </div>
-                </div>
+                </nav>
                 <div>
                     <Switch>
                         <Route exact path="/" component={Login}/>
