@@ -13,7 +13,7 @@ class Home extends Component {
                 <br/>
                 <br/>
                 <img className="rounded mx-auto d-block img-fluid" src={randomImg(imgArr)} alt="TV GIF"/>
-                <h1 className=".mx-auto">Welcome to Marathoner</h1>
+                <h1 className="text-center">Welcome to Marathoner</h1>
             </div>
         )
     }
