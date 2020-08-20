@@ -15,7 +15,7 @@ class NavBar extends Component {
             <div>
                 <nav className="navbar navbar-light" style={{'backgroundColor': '#e3f2fd'}} >
                     <div className="logo my-2">
-                        <Link to="/home" className="Home">Marathoner</Link>{" "}
+                        <Link to="/home" className="Home">Binge</Link>{" "}
                     </div>
                     <div className="links">
                         <Link to="/users">Users</Link>{" "}
