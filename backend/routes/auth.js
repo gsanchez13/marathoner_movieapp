@@ -27,14 +27,12 @@ router.post('/signup', async (req, res, next) => {
     }
 });
 
-router.post('/login', passport.authenticate('local'), (req, res, next) => {
-    res.status(200)
-    .json({
-        payload: req.user,
-        message: "User sucessfully logged in.",
-        error: false,
-    })
-});
+router.post('/login', passport.authenticate('local', {
+    sucessRedirect: '/',
+    successFlash: 'Welcome!',
+    failureRedirect: '/login',
+    failureFlash: 'Invalid username or password.'
+}));
 //adds middleware form passport thats going to take in username & password and compare them and sucessfully logs them in
 
 router.get('/logout', (req, res, next) => {
